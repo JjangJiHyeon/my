@@ -436,19 +436,25 @@ window.drawOverlays = function(pageIdx) {
         const height = (y1 - y0) * scaleY;
         
         const confText = typeof b.score === 'number' ? (b.score * 100).toFixed(1) + '%' : '-';
-        const info = `ID: ${b.id} | Type: ${b.type} | Src: ${b.source} | Score: ${confText} | BBox: [${b.bbox.join(', ')}]`;
+        let infoStr = `ID: ${b.id} | Type: ${b.type} | Src: ${b.source} | Score: ${confText} | BBox: [${b.bbox.join(', ')}]`;
         
-        html += `<div id="overlay-${b.id}" class="bbox-overlay ${typeClass} transition-all duration-200" pointer-events-auto" data-type="${b.type}" 
+        const meta = b.meta || {};
+        if (meta.classification_reason) infoStr += `\nClassify: ${meta.classification_reason}`;
+        if (meta.score_reason) infoStr += `\nScore: ${meta.score_reason}`;
+        
+        const escapedInfo = escapeHtml(infoStr).replace(/\n/g, '<br>');
+        
+        html += `<div id="overlay-${b.id}" class="bbox-overlay ${typeClass} transition-all duration-200 pointer-events-auto" data-type="${b.type}" 
             style="left:${left}px; top:${top}px; width:${width}px; height:${height}px;"
-            onmouseenter="showHoverInfo('${escapeHtml(info)}'); highlightList('${b.id}')"
+            onmouseenter="showHoverInfo('${escapedInfo}'); highlightList('${b.id}')"
             onmouseleave="clearHoverInfo(); resetList('${b.id}')"></div>`;
     });
     layer.innerHTML = html;
 }
 
-window.showHoverInfo = function(text) {
+window.showHoverInfo = function(textHtml) {
     const info = document.getElementById('hoverInfo');
-    if (info) info.textContent = text;
+    if (info) info.innerHTML = textHtml;
 }
 window.clearHoverInfo = function() {
     const info = document.getElementById('hoverInfo');
@@ -484,20 +490,29 @@ function renderBlocks(blocks) {
         else if (b.type === 'image' || b.type === 'chart_like') typeColor = '#8b5cf6'; // purple
         else if (b.type === 'title') typeColor = '#f59e0b'; // orange
         
-        const confText = typeof b.confidence === 'number' ? `${(b.confidence * 100).toFixed(1)}%` : '-';
+        const confText = typeof b.score === 'number' ? `${(b.score * 100).toFixed(1)}%` : (typeof b.confidence === 'number' ? `${(b.confidence * 100).toFixed(1)}%` : '-');
         const bboxText = Array.isArray(b.bbox) ? b.bbox.map(v => Math.round(v)).join(', ') : '-';
         
         bHtml += `
         <div class="block-card">
             <div class="block-header">
                 <div>
-                    <span class="block-type" style="background:${typeColor}">${b.type}</span>
-                    <span class="block-meta ml-2 truncate">ID: ${b.id} | Src: ${b.source}</span>
+                    <span class="block-type" style="background:${typeColor}">${escapeHtml(b.type || 'unknown')}</span>
+                    <span class="block-meta ml-2 truncate">ID: ${escapeHtml(b.id || '')} | Src: ${escapeHtml(b.source || '')}</span>
                 </div>
                 <div class="block-meta">Conf: ${confText} | BBox: [${bboxText}]</div>
             </div>`;
+            
+        const meta = b.meta || {};
+        if (meta.classification_reason) {
+            bHtml += `<div class="text-xs text-gray-400 mb-0.5"><span class="font-semibold text-gray-500">Classify:</span> ${escapeHtml(meta.classification_reason)}</div>`;
+        }
+        if (meta.score_reason) {
+            bHtml += `<div class="text-xs text-gray-400 mb-0.5"><span class="font-semibold text-gray-500">Score:</span> ${escapeHtml(meta.score_reason)}</div>`;
+        }
+        
         if (b.text) {
-            bHtml += `<div class="block-text">${escapeHtml(b.text)}</div>`;
+            bHtml += `<div class="block-text mt-2">${escapeHtml(b.text)}</div>`;
         }
         bHtml += `</div>`;
     });
@@ -505,21 +520,38 @@ function renderBlocks(blocks) {
     return bHtml;
 }
 
+function renderSimpleList(items) {
+    if (!Array.isArray(items) || items.length === 0) return '-';
+    return `<ul class="list-disc pl-4 space-y-1">` + items.map(i => `<li>${escapeHtml(i == null ? '' : String(i))}</li>`).join('') + `</ul>`;
+}
+
+function renderKeyValueList(items) {
+    if (!Array.isArray(items) || items.length === 0) return '-';
+    return `<ul class="space-y-1 mt-1">` + items.map(i => {
+        if (typeof i === 'object' && i !== null) {
+            return `<li><div class="p-1 bg-gray-800 rounded border border-gray-700 leading-snug">` + 
+                Object.entries(i).map(([k,v]) => `<span class="text-gray-400 font-semibold">${escapeHtml(k)}:</span> <span class="text-gray-200">${escapeHtml(v == null ? '' : String(v))}</span>`).join(' | ') + 
+                `</div></li>`;
+        }
+        return `<li><div class="p-1 bg-gray-800 rounded border border-gray-700 text-gray-200">${escapeHtml(i == null ? '' : String(i))}</div></li>`;
+    }).join('') + `</ul>`;
+}
+
 function renderParserDebug(debug) {
-    const strategy = debug.merge_strategy || '-';
-    const ocrEngine = debug.ocr_engine_used || '-';
-    const fallbackReason = debug.fallback_reason || '-';
     const ocrTrigger = debug.ocr_trigger_reason || '-';
     
     let candidates = debug.candidate_counts ? Object.entries(debug.candidate_counts).map(([k,v]) => `${k}:${v}`).join(', ') : '-';
     let typeCounts = debug.block_type_counts ? Object.entries(debug.block_type_counts).map(([k,v]) => `${k}:${v}`).join(', ') : '-';
     
-    let warningsHtml = '-';
-    if (Array.isArray(debug.parse_warnings) && debug.parse_warnings.length > 0) {
-        warningsHtml = `<ul class="list-disc pl-4 space-y-1">` + 
-            debug.parse_warnings.map(w => `<li>${escapeHtml(w)}</li>`).join('') + 
-            `</ul>`;
-    }
+    let warningsHtml = debug.parse_warnings && debug.parse_warnings.length > 0 ? renderSimpleList(debug.parse_warnings) : '-';
+    
+    const layoutHint = debug.page_layout_hint || '-';
+    const readOrgStrategy = debug.reading_order_strategy || '-';
+    const readOrgBasis = debug.reading_order_basis || '-';
+    
+    const qualityNotesHtml = renderSimpleList(debug.quality_notes);
+    const mergeEventsHtml = renderKeyValueList(debug.merge_events);
+    const classOverridesHtml = renderKeyValueList(debug.classification_overrides);
 
     return `<div class="mb-4 mt-6">
         <div class="text-xs text-gray-500 uppercase mb-2">Parser Debug Details</div>
@@ -528,11 +560,37 @@ function renderParserDebug(debug) {
             <div><span class="font-bold text-gray-400">OCR Trigger:</span> <span class="text-gray-200">${escapeHtml(ocrTrigger)}</span></div>
             <div><span class="font-bold text-gray-400">Candidates:</span> <span class="text-gray-200">${escapeHtml(candidates)}</span></div>
             <div><span class="font-bold text-gray-400">Types:</span> <span class="text-gray-200">${escapeHtml(typeCounts)}</span></div>
-            <div><span class="font-bold text-gray-400">Strategy:</span> <span class="text-gray-200">${escapeHtml(strategy)}</span></div>
-            <div><span class="font-bold text-gray-400">Warnings:</span> <div class="text-red-300 mt-1">${warningsHtml}</div></div>
+            
+            <div class="mt-4 pt-3 border-t border-gray-800">
+                <div class="font-bold text-gray-300 mb-1">Reading Order</div>
+                <div class="pl-2 space-y-1">
+                    <div><span class="text-gray-500">Layout Hint:</span> <span class="text-gray-200">${escapeHtml(layoutHint)}</span></div>
+                    <div><span class="text-gray-500">Strategy:</span> <span class="text-gray-200">${escapeHtml(readOrgStrategy)}</span></div>
+                    <div><span class="text-gray-500">Basis:</span> <span class="text-gray-200">${escapeHtml(readOrgBasis)}</span></div>
+                </div>
+            </div>
+            
+            <div class="mt-2 pt-2 border-t border-gray-800">
+                <div class="font-bold text-gray-300 mb-1">Quality Notes</div>
+                <div class="pl-2 text-gray-300">${qualityNotesHtml}</div>
+            </div>
+
+            <div class="mt-2 pt-2 border-t border-gray-800">
+                <div class="font-bold text-gray-300 mb-1">Merge Events</div>
+                <div class="pl-2">${mergeEventsHtml}</div>
+            </div>
+
+            <div class="mt-2 pt-2 border-t border-gray-800">
+                <div class="font-bold text-gray-300 mb-1">Classification Overrides</div>
+                <div class="pl-2">${classOverridesHtml}</div>
+            </div>
+
+            <div class="mt-2 pt-2 border-t border-gray-800">
+                <span class="font-bold text-gray-400">Warnings:</span> <div class="text-red-300 mt-1">${warningsHtml}</div>
+            </div>
             
             <details class="mt-4 pt-2 border-t border-gray-700">
-                <summary class="cursor-pointer text-gray-500 hover:text-gray-300 transition-colors">Raw Config & Logs (click to expand)</summary>
+                <summary class="cursor-pointer text-gray-500 hover:text-gray-300 transition-colors">Raw JSON (details)</summary>
                 <pre class="mt-2 text-xs overflow-x-auto">${escapeHtml(JSON.stringify(debug, null, 2))}</pre>
             </details>
         </div>
