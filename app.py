@@ -83,7 +83,7 @@ def _is_legacy_result(data: dict[str, Any]) -> bool:
         # A safer check is to see if any new field exists in the first page (if there are pages).
     
     first_page = pages[0]
-    required_fields = ("blocks", "preview_image", "parser_debug")
+    required_fields = ("blocks", "preview_image", "parser_debug", "page_width")
     # It must have all required fields to be considered non-legacy
     return not all(field in first_page for field in required_fields)
 

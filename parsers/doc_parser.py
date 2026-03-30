@@ -85,7 +85,49 @@ def _parse_docx(filepath: str) -> dict[str, Any]:
         "parser_used": "python-docx",
     }
 
-    pages = [{"page_num": 1, "text": full_text, "tables": tables}]
+    pages = [{
+        "page_num": 1,
+        "page_width": 0,
+        "page_height": 0,
+        "preview_width": 0,
+        "preview_height": 0,
+        "preview_scale_x": 1.0,
+        "preview_scale_y": 1.0,
+        "coord_space": "page_points",
+        "preview_image": None,
+        "text": full_text,
+        "tables": tables,
+        "blocks": [{
+            "id": "p1_b0",
+            "type": "text",
+            "bbox": [0, 0, 0, 0],
+            "text": full_text,
+            "page_num": 1,
+            "source": "doc_parser",
+            "score": 1.0,
+            "meta": {}
+        }] if full_text else [],
+        "image_count": 0,
+        "text_source": "native",
+        "ocr_applied": False,
+        "ocr_confidence": 0.0,
+        "parser_debug": {
+            "preview_generated": False,
+            "preview_error": None,
+            "native_text_chars": len(full_text),
+            "ocr_used": False,
+            "ocr_trigger_reason": "ocr_not_needed",
+            "candidate_counts": {
+                "raw_text_blocks": 1 if full_text else 0,
+                "final_blocks": 1 if full_text else 0
+            },
+            "block_type_counts": {
+                "text": 1 if full_text else 0
+            },
+            "dropped_blocks": [],
+            "bbox_warnings": []
+        }
+    }]
     return {"pages": pages, "metadata": metadata, "status": "success"}
 
 
@@ -112,7 +154,49 @@ def _parse_doc_tika(filepath: str) -> dict[str, Any]:
         "tika_content_type": tika_meta.get("Content-Type", ""),
     }
 
-    pages = [{"page_num": 1, "text": full_text, "tables": []}]
+    pages = [{
+        "page_num": 1,
+        "page_width": 0,
+        "page_height": 0,
+        "preview_width": 0,
+        "preview_height": 0,
+        "preview_scale_x": 1.0,
+        "preview_scale_y": 1.0,
+        "coord_space": "page_points",
+        "preview_image": None,
+        "text": full_text,
+        "tables": [],
+        "blocks": [{
+            "id": "p1_b0",
+            "type": "text",
+            "bbox": [0, 0, 0, 0],
+            "text": full_text,
+            "page_num": 1,
+            "source": "doc_parser",
+            "score": 1.0,
+            "meta": {}
+        }] if full_text else [],
+        "image_count": 0,
+        "text_source": "native",
+        "ocr_applied": False,
+        "ocr_confidence": 0.0,
+        "parser_debug": {
+            "preview_generated": False,
+            "preview_error": None,
+            "native_text_chars": len(full_text),
+            "ocr_used": False,
+            "ocr_trigger_reason": "ocr_not_needed",
+            "candidate_counts": {
+                "raw_text_blocks": 1 if full_text else 0,
+                "final_blocks": 1 if full_text else 0
+            },
+            "block_type_counts": {
+                "text": 1 if full_text else 0
+            },
+            "dropped_blocks": [],
+            "bbox_warnings": []
+        }
+    }]
     return {"pages": pages, "metadata": metadata, "status": "success"}
 
 
@@ -146,7 +230,49 @@ def _parse_doc_win32(filepath: str) -> dict[str, Any]:
         "char_count": len(full_text),
         "parser_used": "win32com (Microsoft Word)",
     }
-    pages = [{"page_num": 1, "text": full_text, "tables": []}]
+    pages = [{
+        "page_num": 1,
+        "page_width": 0,
+        "page_height": 0,
+        "preview_width": 0,
+        "preview_height": 0,
+        "preview_scale_x": 1.0,
+        "preview_scale_y": 1.0,
+        "coord_space": "page_points",
+        "preview_image": None,
+        "text": full_text,
+        "tables": [],
+        "blocks": [{
+            "id": "p1_b0",
+            "type": "text",
+            "bbox": [0, 0, 0, 0],
+            "text": full_text,
+            "page_num": 1,
+            "source": "doc_parser",
+            "score": 1.0,
+            "meta": {}
+        }] if full_text else [],
+        "image_count": 0,
+        "text_source": "native",
+        "ocr_applied": False,
+        "ocr_confidence": 0.0,
+        "parser_debug": {
+            "preview_generated": False,
+            "preview_error": None,
+            "native_text_chars": len(full_text),
+            "ocr_used": False,
+            "ocr_trigger_reason": "ocr_not_needed",
+            "candidate_counts": {
+                "raw_text_blocks": 1 if full_text else 0,
+                "final_blocks": 1 if full_text else 0
+            },
+            "block_type_counts": {
+                "text": 1 if full_text else 0
+            },
+            "dropped_blocks": [],
+            "bbox_warnings": []
+        }
+    }]
     return {"pages": pages, "metadata": metadata, "status": "success"}
 
 
@@ -171,7 +297,49 @@ def _parse_doc_binary(filepath: str) -> dict[str, Any]:
         "char_count": len(full_text),
         "parser_used": "OLE binary (piece table)",
     }
-    pages = [{"page_num": 1, "text": full_text, "tables": []}]
+    pages = [{
+        "page_num": 1,
+        "page_width": 0,
+        "page_height": 0,
+        "preview_width": 0,
+        "preview_height": 0,
+        "preview_scale_x": 1.0,
+        "preview_scale_y": 1.0,
+        "coord_space": "page_points",
+        "preview_image": None,
+        "text": full_text,
+        "tables": [],
+        "blocks": [{
+            "id": "p1_b0",
+            "type": "text",
+            "bbox": [0, 0, 0, 0],
+            "text": full_text,
+            "page_num": 1,
+            "source": "doc_parser",
+            "score": 1.0,
+            "meta": {}
+        }] if full_text else [],
+        "image_count": 0,
+        "text_source": "native",
+        "ocr_applied": False,
+        "ocr_confidence": 0.0,
+        "parser_debug": {
+            "preview_generated": False,
+            "preview_error": None,
+            "native_text_chars": len(full_text),
+            "ocr_used": False,
+            "ocr_trigger_reason": "ocr_not_needed",
+            "candidate_counts": {
+                "raw_text_blocks": 1 if full_text else 0,
+                "final_blocks": 1 if full_text else 0
+            },
+            "block_type_counts": {
+                "text": 1 if full_text else 0
+            },
+            "dropped_blocks": [],
+            "bbox_warnings": []
+        }
+    }]
     return {"pages": pages, "metadata": metadata, "status": "success"}
 
 

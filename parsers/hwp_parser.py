@@ -71,7 +71,49 @@ def parse_hwp(filepath: str) -> dict[str, Any]:
 
     pages: list[dict[str, Any]] = []
     for i, text in enumerate(sections):
-        pages.append({"page_num": i + 1, "text": text, "tables": []})
+        pages.append({
+            "page_num": i + 1,
+            "page_width": 0,
+            "page_height": 0,
+            "preview_width": 0,
+            "preview_height": 0,
+            "preview_scale_x": 1.0,
+            "preview_scale_y": 1.0,
+            "coord_space": "page_points",
+            "preview_image": None,
+            "text": text,
+            "tables": [],
+            "blocks": [{
+                "id": f"p{i+1}_b0",
+                "type": "text",
+                "bbox": [0, 0, 0, 0],
+                "text": text,
+                "page_num": i + 1,
+                "source": "hwp_parser",
+                "score": 1.0,
+                "meta": {}
+            }] if text else [],
+            "image_count": 0,
+            "text_source": "native",
+            "ocr_applied": False,
+            "ocr_confidence": 0.0,
+            "parser_debug": {
+                "preview_generated": False,
+                "preview_error": None,
+                "native_text_chars": len(text),
+                "ocr_used": False,
+                "ocr_trigger_reason": "ocr_not_needed",
+                "candidate_counts": {
+                    "raw_text_blocks": 1 if text else 0,
+                    "final_blocks": 1 if text else 0
+                },
+                "block_type_counts": {
+                    "text": 1 if text else 0
+                },
+                "dropped_blocks": [],
+                "bbox_warnings": []
+            }
+        })
 
     metadata.update({
         "parser_used": "custom OLE HWP parser",
