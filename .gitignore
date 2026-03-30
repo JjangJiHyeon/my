@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+parsed_results/
+documents/
+.venv/
+env/
+.env

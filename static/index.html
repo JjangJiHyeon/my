@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document Parser</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
+    * { font-family: 'Noto Sans KR', 'Inter', sans-serif; }
+    body { background: #0f172a; color: #e2e8f0; }
+    .sidebar { background: #1e293b; }
+    .doc-card { transition: all .15s; }
+    .doc-card:hover { background: #334155; }
+    .doc-card.active { background: #1e40af; border-left: 3px solid #60a5fa; }
+    .content-area { background: #1e293b; }
+    .badge { font-size: 0.65rem; padding: 2px 8px; border-radius: 9999px; font-weight: 600; text-transform: uppercase; }
+    .badge-pdf { background: #dc2626; color: #fff; }
+    .badge-doc { background: #2563eb; color: #fff; }
+    .badge-hwp { background: #059669; color: #fff; }
+    .badge-xlsx { background: #d97706; color: #fff; }
+    .badge-xls { background: #d97706; color: #fff; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+    .status-success { background: #22c55e; }
+    .status-error { background: #ef4444; }
+    .status-pending { background: #6b7280; }
+    .status-parsing { background: #eab308; animation: pulse 1s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
+    .tab-btn { padding: 6px 16px; border-radius: 6px 6px 0 0; cursor: pointer; }
+    .tab-btn.active { background: #334155; color: #60a5fa; font-weight: 600; }
+    .tab-btn:not(.active) { background: transparent; color: #94a3b8; }
+    .tab-btn:not(.active):hover { color: #cbd5e1; }
+    pre.parsed-text { white-space: pre-wrap; word-break: break-word; line-height: 1.7; font-size: 0.85rem; color: #cbd5e1; background: #0f172a; border-radius: 8px; padding: 16px; max-height: 60vh; overflow-y: auto; }
+    table.data-table { border-collapse: collapse; font-size: 0.78rem; width: 100%; }
+    table.data-table th, table.data-table td { border: 1px solid #334155; padding: 4px 8px; text-align: left; }
+    table.data-table th { background: #1e293b; color: #94a3b8; font-weight: 600; }
+    table.data-table td { color: #cbd5e1; }
+    .table-wrap { max-height: 50vh; overflow: auto; border-radius: 8px; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #1e293b; }
+    ::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
+    .loading-spinner { border: 3px solid #334155; border-top: 3px solid #60a5fa; border-radius: 50%; width: 20px; height: 20px; animation: spin .7s linear infinite; display: inline-block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .stat-card { background: #334155; border-radius: 8px; padding: 12px 16px; }
+    .page-preview { max-width: 100%; border: 1px solid #475569; border-radius: 4px; display: block; margin-bottom: 1rem; }
+    .debug-box { font-family: 'Courier New', monospace; font-size: 0.75rem; background: #0f172a; padding: 12px; border-radius: 8px; color: #a78bfa; overflow-x: auto; }
+    .block-card { background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 10px; margin-bottom: 8px; }
+    .block-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .block-type { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; background: #3b82f6; color: white; }
+    .block-meta { font-size: 0.7rem; color: #94a3b8; }
+    .block-text { font-size: 0.8rem; color: #e2e8f0; white-space: pre-wrap; margin-top: 4px; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="flex items-center justify-between px-6 py-3 border-b border-gray-700" style="background:#1e293b;">
+    <div class="flex items-center gap-3">
+      <svg class="w-7 h-7 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+      <h1 class="text-lg font-bold text-white">Document Parser</h1>
+      <span class="text-xs text-gray-400 ml-2">Multi-format parsing viewer</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span id="globalStatus" class="text-xs text-gray-400"></span>
+      <button id="parseAllBtn" onclick="parseAll()" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
+        Parse All
+      </button>
+    </div>
+  </header>
+
+  <div class="flex flex-1 overflow-hidden">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar w-80 flex-shrink-0 border-r border-gray-700 overflow-y-auto">
+      <div class="p-3">
+        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2 px-2">Documents</div>
+        <div id="docList" class="space-y-1"></div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="flex-1 flex flex-col overflow-hidden">
+      <!-- Empty state -->
+      <div id="emptyState" class="flex-1 flex items-center justify-center">
+        <div class="text-center">
+          <svg class="w-16 h-16 text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+          <p class="text-gray-400 text-sm">Select a document to view or click <strong>Parse All</strong></p>
+        </div>
+      </div>
+
+      <!-- Document detail -->
+      <div id="detailView" class="flex-1 flex flex-col overflow-hidden" style="display:none;">
+        <!-- Doc header -->
+        <div class="px-6 py-4 border-b border-gray-700">
+          <div class="flex items-center gap-3 mb-2">
+            <span id="detailBadge" class="badge"></span>
+            <h2 id="detailFilename" class="text-white font-semibold text-base"></h2>
+          </div>
+          <div id="detailStats" class="flex gap-3 flex-wrap"></div>
+        </div>
+        <!-- Tabs -->
+        <div id="tabBar" class="flex px-6 pt-2 gap-1 border-b border-gray-700"></div>
+        <!-- Tab content -->
+        <div id="tabContent" class="flex-1 overflow-y-auto p-6"></div>
+      </div>
+    </main>
+  </div>
+
+<script>
+let documents = [];
+let activeDocId = null;
+let activeDoc = null;
+
+async function loadDocuments() {
+  const res = await fetch('/api/documents');
+  documents = await res.json();
+  renderSidebar();
+}
+
+function renderSidebar() {
+  const el = document.getElementById('docList');
+  el.innerHTML = documents.map(d => `
+    <div class="doc-card flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer ${d.id === activeDocId ? 'active' : ''}"
+         onclick="selectDoc('${d.id}')">
+      <span class="status-dot status-${d.status}"></span>
+      <div class="flex-1 min-w-0">
+        <div class="text-sm text-gray-200 truncate">${d.filename}</div>
+        <div class="flex items-center gap-2 mt-0.5">
+          <span class="badge badge-${d.file_type}">${d.file_type}</span>
+          <span class="text-xs text-gray-500">${formatSize(d.file_size)}</span>
+        </div>
+      </div>
+      ${d.status === 'pending' ? `<button onclick="event.stopPropagation();parseSingle('${d.id}')" class="text-xs text-blue-400 hover:text-blue-300 whitespace-nowrap">Parse</button>` : ''}
+    </div>
+  `).join('');
+}
+
+function formatSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / 1048576).toFixed(1) + ' MB';
+}
+
+async function parseSingle(docId) {
+  const doc = documents.find(d => d.id === docId);
+  if (!doc) return;
+  doc.status = 'parsing';
+  renderSidebar();
+
+  try {
+    const res = await fetch(`/api/documents/${docId}/parse`, { method: 'POST' });
+    const data = await res.json();
+    doc.status = data.status || 'error';
+    doc.parsed = true;
+    renderSidebar();
+    if (activeDocId === docId) showDetail(data);
+  } catch (e) {
+    doc.status = 'error';
+    renderSidebar();
+  }
+}
+
+async function parseAll() {
+  const btn = document.getElementById('parseAllBtn');
+  const statusEl = document.getElementById('globalStatus');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading-spinner mr-2"></span>Parsing...';
+  statusEl.textContent = '';
+
+  try {
+    const res = await fetch('/api/parse-all', { method: 'POST' });
+    const results = await res.json();
+    const success = results.filter(r => r.status === 'success').length;
+    const total = results.length;
+    statusEl.textContent = `${success}/${total} parsed successfully`;
+
+    await loadDocuments();
+    if (activeDocId) {
+      const r = results.find(r => r.id === activeDocId);
+      if (r) showDetail(r);
+    }
+  } catch (e) {
+    statusEl.textContent = 'Parse failed: ' + e.message;
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = 'Parse All';
+  }
+}
+
+async function selectDoc(docId) {
+  activeDocId = docId;
+  renderSidebar();
+
+  const doc = documents.find(d => d.id === docId);
+  if (!doc) return;
+
+  if (doc.parsed) {
+    const res = await fetch(`/api/documents/${docId}`);
+    const data = await res.json();
+    showDetail(data);
+  } else {
+    await parseSingle(docId);
+  }
+}
+
+function showDetail(data) {
+  activeDoc = data;
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('detailView').style.display = 'flex';
+
+  document.getElementById('detailBadge').className = `badge badge-${data.file_type}`;
+  document.getElementById('detailBadge').textContent = data.file_type;
+  document.getElementById('detailFilename').textContent = data.filename;
+
+  const meta = data.metadata || {};
+  const stats = document.getElementById('detailStats');
+  const statItems = [
+    { label: 'Status', value: data.status, color: data.status === 'success' ? 'text-green-400' : 'text-red-400' },
+    { label: 'Pages', value: (data.pages || []).length },
+    { label: 'Size', value: formatSize(data.file_size) },
+    { label: 'Total Chars', value: (meta.total_chars || 0).toLocaleString() },
+  ];
+  if (meta.parse_time_sec != null) statItems.push({ label: 'Parse Time', value: meta.parse_time_sec + 's' });
+  if (meta.text_quality) statItems.push({ label: 'Quality', value: meta.text_quality });
+  if (meta.parser_used) statItems.push({ label: 'Parser', value: meta.parser_used });
+
+  stats.innerHTML = statItems.map(s => `
+    <div class="stat-card">
+      <div class="text-xs text-gray-500">${s.label}</div>
+      <div class="text-sm font-semibold ${s.color || 'text-white'}">${s.value}</div>
+    </div>
+  `).join('');
+
+  if (data.error) {
+    stats.innerHTML += `<div class="stat-card bg-red-900 bg-opacity-30">
+      <div class="text-xs text-red-400">Error</div>
+      <div class="text-sm text-red-300">${data.error}</div>
+    </div>`;
+  }
+
+  renderTabs(data);
+}
+
+function renderTabs(data) {
+  const pages = data.pages || [];
+  const tabBar = document.getElementById('tabBar');
+
+  if (pages.length === 0) {
+    tabBar.innerHTML = '';
+    document.getElementById('tabContent').innerHTML = '<p class="text-gray-500 text-sm">No content extracted.</p>';
+    return;
+  }
+
+  tabBar.innerHTML = pages.map((p, i) => {
+    const label = p.sheet_name || `Page ${p.page_num}`;
+    return `<button class="tab-btn ${i === 0 ? 'active' : ''}" onclick="switchTab(${i})">${label}</button>`;
+  }).join('');
+
+  switchTab(0);
+}
+
+function switchTab(idx) {
+  const pages = activeDoc.pages || [];
+  const page = pages[idx];
+  if (!page) return;
+
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    b.classList.toggle('active', i === idx);
+  });
+
+  const content = document.getElementById('tabContent');
+  let html = '';
+
+  const extras = [];
+  if (page.dimensions) extras.push(`Dimensions: ${page.dimensions}`);
+  if (page.image_count !== undefined) extras.push(`Images: ${page.image_count}`);
+  if (page.text_source) extras.push(`Source: ${page.text_source}`);
+  if (page.ocr_applied !== undefined) extras.push(`OCR Applied: ${page.ocr_applied ? 'Yes' : 'No'}`);
+  if (typeof page.ocr_confidence === 'number') extras.push(`OCR Conf: ${(page.ocr_confidence * 100).toFixed(1)}%`);
+  if (page.row_count != null) extras.push(`Rows: ${page.row_count}`);
+  if (page.col_count != null) extras.push(`Cols: ${page.col_count}`);
+  if (extras.length) {
+    html += `<div class="text-xs text-gray-400 mb-4 pb-2 border-b border-gray-700">${extras.join(' &middot; ')}</div>`;
+  }
+
+  if (page.text) {
+    html += `<div class="mb-4">
+      <div class="text-xs text-gray-500 uppercase mb-2">Raw Extracted Text (${page.text.length.toLocaleString()} chars)</div>
+      <pre class="parsed-text">${escapeHtml(page.text)}</pre>
+    </div>`;
+  }
+
+  if (page.tables && page.tables.length > 0) {
+    page.tables.forEach((table, ti) => {
+      html += `<div class="mb-4">
+        <div class="text-xs text-gray-500 uppercase mb-2">Raw Table ${ti + 1} (${table.length} rows)</div>
+        <div class="table-wrap">
+          <table class="data-table">`;
+      table.forEach((row, ri) => {
+        const tag = ri === 0 ? 'th' : 'td';
+        html += '<tr>' + row.map(cell => `<${tag}>${escapeHtml(cell)}</${tag}>`).join('') + '</tr>';
+      });
+      html += '</table></div></div>';
+    });
+  }
+  
+  // Render Blocks
+  if (page.blocks && page.blocks.length > 0) {
+      html += renderBlocks(page.blocks);
+  }
+
+  // Render Preview Image
+  if (page.preview_image) {
+      html = `<div class="mb-4">
+          <div class="text-xs text-gray-500 uppercase mb-2">Page Preview</div>
+          <img src="${page.preview_image}" class="page-preview" alt="Page ${page.page_num} Preview" onerror="this.style.display='none'"/>
+      </div>` + html;
+  }
+
+  // Render Parser Debug
+  if (page.parser_debug) {
+      html += renderParserDebug(page.parser_debug);
+  }
+
+  if (!page.text && (!page.tables || page.tables.length === 0) && (!page.blocks || page.blocks.length === 0) && !page.preview_image) {
+    html = '<p class="text-gray-500 text-sm">No content on this page.</p>';
+  }
+
+  if (!page.text && (!page.tables || page.tables.length === 0) && (!page.blocks || page.blocks.length === 0) && !page.preview_image) {
+    html = '<p class="text-gray-500 text-sm">No content on this page.</p>';
+  }
+
+  content.innerHTML = html;
+}
+
+function renderBlocks(blocks) {
+    if (!blocks || blocks.length === 0) return '';
+    let bHtml = `<div class="mb-6"><div class="text-xs text-gray-500 uppercase mb-2">Extracted Blocks (${blocks.length})</div><div class="space-y-2">`;
+    blocks.forEach(b => {
+        let typeColor = '#3b82f6'; // blue (default)
+        if (b.type === 'table') typeColor = '#10b981'; // green
+        else if (b.type === 'image' || b.type === 'chart_like') typeColor = '#8b5cf6'; // purple
+        else if (b.type === 'title') typeColor = '#f59e0b'; // orange
+        
+        const confText = typeof b.confidence === 'number' ? `${(b.confidence * 100).toFixed(1)}%` : '-';
+        const bboxText = Array.isArray(b.bbox) ? b.bbox.map(v => Math.round(v)).join(', ') : '-';
+        
+        bHtml += `
+        <div class="block-card">
+            <div class="block-header">
+                <div>
+                    <span class="block-type" style="background:${typeColor}">${b.type}</span>
+                    <span class="block-meta ml-2 truncate">ID: ${b.id} | Src: ${b.source}</span>
+                </div>
+                <div class="block-meta">Conf: ${confText} | BBox: [${bboxText}]</div>
+            </div>`;
+        if (b.text) {
+            bHtml += `<div class="block-text">${escapeHtml(b.text)}</div>`;
+        }
+        bHtml += `</div>`;
+    });
+    bHtml += `</div></div>`;
+    return bHtml;
+}
+
+function renderParserDebug(debug) {
+    const strategy = debug.merge_strategy || '-';
+    const ocrEngine = debug.ocr_engine_used || '-';
+    const fallbackReason = debug.fallback_reason || '-';
+    const order = Array.isArray(debug.extraction_order) ? debug.extraction_order.join(', ') : '-';
+    
+    let warningsHtml = '-';
+    if (Array.isArray(debug.parse_warnings) && debug.parse_warnings.length > 0) {
+        warningsHtml = `<ul class="list-disc pl-4 space-y-1">` + 
+            debug.parse_warnings.map(w => `<li>${escapeHtml(w)}</li>`).join('') + 
+            `</ul>`;
+    }
+
+    return `<div class="mb-4 mt-6">
+        <div class="text-xs text-gray-500 uppercase mb-2">Parser Debug Info</div>
+        <div class="debug-box space-y-2">
+            <div><span class="font-bold text-gray-400">Strategy:</span> <span class="text-gray-200">${escapeHtml(strategy)}</span></div>
+            <div><span class="font-bold text-gray-400">OCR Engine:</span> <span class="text-gray-200">${escapeHtml(ocrEngine)}</span></div>
+            <div><span class="font-bold text-gray-400">Fallback Reason:</span> <span class="text-gray-200">${escapeHtml(fallbackReason)}</span></div>
+            <div><span class="font-bold text-gray-400">Extraction Order:</span> <span class="text-gray-200">${escapeHtml(order)}</span></div>
+            <div><span class="font-bold text-gray-400">Warnings:</span> <div class="text-red-300 mt-1">${warningsHtml}</div></div>
+            
+            <details class="mt-4 pt-2 border-t border-gray-700">
+                <summary class="cursor-pointer text-gray-500 hover:text-gray-300 transition-colors">Raw JSON</summary>
+                <pre class="mt-2 text-xs overflow-x-auto">${escapeHtml(JSON.stringify(debug, null, 2))}</pre>
+            </details>
+        </div>
+    </div>`;
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+loadDocuments();
+</script>
+</body>
+</html>

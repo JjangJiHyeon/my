@@ -1,0 +1,35 @@
+# ── Core web framework ──
+fastapi
+uvicorn
+python-multipart
+aiofiles
+
+# ── PDF parsing ──
+PyMuPDF
+pdfplumber
+camelot-py[cv]
+
+# ── OCR (selective, local only) ──
+easyocr
+pytesseract
+opencv-python
+Pillow
+numpy
+
+# ── Data models ──
+pydantic
+
+# ── Office document parsing ──
+python-docx
+openpyxl
+xlrd
+olefile
+
+# ── Tika (Java-based fallback for .doc) ──
+tika
+
+# ── Data handling ──
+pandas
+
+# ── Windows-only (optional, install manually if needed) ──
+# pip install pywin32
