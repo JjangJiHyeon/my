@@ -15,6 +15,7 @@ Key changes from previous version
 
 from __future__ import annotations
 
+import re
 import logging
 from typing import Any
 
@@ -146,8 +147,18 @@ def _run_easyocr(image: np.ndarray, sx: float, sy: float) -> dict[str, Any]:
             pts = item[0]                       # [[x0,y0],[x1,y1],[x2,y2],[x3,y3]]
             text_val = item[1] if len(item) > 1 else ""
             conf_val = float(item[2]) if len(item) > 2 else 0.0
-            if not text_val.strip():
+            if not text_val.strip() or len(text_val.strip()) < 1:
                 continue
+            
+            # 의미 있는 문자(한글/영문/숫자)가 하나도 없는 순수 특수문자 파편 제외
+            if not re.search(r'[가-힣a-zA-Z0-9]', text_val):
+                continue
+            
+            # 강화: low-confidence 짧은 파편 제외 (micro-summary 원천 차단)
+            if (conf_val < 0.5 and len(text_val.strip()) <= 5) or \
+               (conf_val < 0.6 and len(text_val.strip()) <= 2):
+                continue
+
             xs = [p[0] for p in pts]
             ys = [p[1] for p in pts]
             bbox = [
@@ -189,7 +200,11 @@ def _run_pytesseract(image: np.ndarray, sx: float, sy: float) -> dict[str, Any]:
         for i in range(len(data["text"])):
             txt = (data["text"][i] or "").strip()
             conf = int(data["conf"][i]) if data["conf"][i] != -1 else 0
-            if not txt or conf < 10:
+            if not txt or conf < 15:
+                continue
+            
+            # 의미 있는 문자(한글/영문/숫자)가 하나도 없는 순수 특수문자 파편 제외
+            if not re.search(r'[가-힣a-zA-Z0-9]', txt):
                 continue
             x, y, w, h = data["left"][i], data["top"][i], data["width"][i], data["height"][i]
             bbox = [

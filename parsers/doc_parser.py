@@ -20,6 +20,25 @@ logger = logging.getLogger(__name__)
 
 # ── text normalisation (shared) ──────────────────────────────────────
 
+def _analyze_narrative_characteristics(text: str) -> dict[str, Any]:
+    import re
+    clean = text.replace(" ", "").replace("\n", "")
+    num_ratio = len(re.findall(r'\d', clean)) / max(1, len(clean))
+    sentences = len(re.findall(r'[가-힣][다음함]\.', text))
+    
+    paragraphs = [p.strip() for p in text.split('\n') if p.strip()]
+    long_paras = sum(1 for p in paragraphs if len(p) > 60 and ('다' in p or '음' in p or '함' in p))
+    label_patterns = sum(1 for p in paragraphs if len(p) < 30 and re.search(r'[:\-\u2022\[\]]', p))
+    
+    return {
+        "num_ratio": round(num_ratio, 3),
+        "sentence_endings_found": sentences,
+        "long_narrative_paragraphs": long_paras,
+        "short_label_patterns": label_patterns,
+        "is_false_positive_warning_candidate": bool(num_ratio > 0.25 and sentences <= 1 and long_paras > 0),
+        "is_truly_dashboard": bool(num_ratio > 0.25 and sentences <= 1 and long_paras == 0)
+    }
+
 def _normalise_text(text: str) -> str:
     text = text.replace("\r\n", "\n").replace("\r", "\n")
     text = re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]", "", text)
@@ -27,26 +46,231 @@ def _normalise_text(text: str) -> str:
     return text.strip()
 
 
+# ── section header splitting ─────────────────────────────────────────
+
+_SECTION_HEADER_RE = re.compile(
+    r'^\s*'
+    r'(?:'
+    r'[Ⅰ-Ⅹ]'
+    r'|V?I{0,3}'
+    r'|[0-9]{1,2}'
+    r'|[가-힣]'
+    r'|[A-Z]'
+    r')'
+    r'[\.\)]\s*'
+    r'(.+)',
+    re.MULTILINE
+)
+_DATE_LINE_RE = re.compile(r'^\s*\d{4}[.\-/]\d{1,2}[.\-/]\d{1,2}')
+_PURE_NUMBER_RE = re.compile(r'^\s*[\d,.\-+%()△▲▽※ ]+\s*$')
+
+
+def _is_doc_section_header(line: str) -> bool:
+    stripped = line.strip()
+    if len(stripped) > 60:
+        return False
+    if _DATE_LINE_RE.match(stripped):
+        return False
+    if _PURE_NUMBER_RE.match(stripped):
+        return False
+    if _SECTION_HEADER_RE.match(stripped):
+        return True
+    return False
+
+
+def _is_data_row(line: str) -> bool:
+    """탭 구분 숫자/금액 행인지 판단 (표 데이터 행)"""
+    stripped = line.strip()
+    if not stripped:
+        return False
+    # 탭이 여러 개 있고 숫자 비율이 높은 행
+    if '\t' in stripped:
+        parts = [p.strip() for p in stripped.split('\t') if p.strip()]
+        if len(parts) >= 2:
+            num_parts = sum(1 for p in parts if _PURE_NUMBER_RE.match(p))
+            if num_parts >= len(parts) * 0.5:
+                return True
+    # 순수 숫자/기호 행
+    if _PURE_NUMBER_RE.match(stripped):
+        return True
+    return False
+
+
+def _split_into_section_blocks(text: str, page_num: int = 1) -> list[dict[str, Any]]:
+    if not text or not text.strip():
+        return []
+    lines = text.split('\n')
+    blocks: list[dict[str, Any]] = []
+    block_idx = 0
+    current_body_lines: list[str] = []
+    current_data_lines: list[str] = []
+
+    def _flush_body():
+        nonlocal block_idx
+        body_text = '\n'.join(current_body_lines).strip()
+        if body_text:
+            blocks.append({
+                "id": f"p{page_num}_b{block_idx}",
+                "type": "text",
+                "bbox": [0, 0, 0, 0],
+                "text": body_text,
+                "page_num": page_num,
+                "source": "doc_parser",
+                "score": 1.0,
+                "meta": {}
+            })
+            block_idx += 1
+        current_body_lines.clear()
+
+    def _flush_data():
+        nonlocal block_idx
+        data_text = '\n'.join(current_data_lines).strip()
+        if data_text:
+            blocks.append({
+                "id": f"p{page_num}_b{block_idx}",
+                "type": "text",
+                "bbox": [0, 0, 0, 0],
+                "text": data_text,
+                "page_num": page_num,
+                "source": "doc_parser",
+                "score": 1.0,
+                "meta": {"block_subtype": "data_rows"}
+            })
+            block_idx += 1
+        current_data_lines.clear()
+
+    for line in lines:
+        stripped = line.strip()
+        is_header = _is_doc_section_header(line)
+        is_data = _is_data_row(line)
+        # 목록 기호 시작 판정 (□, ◦, -, 1),   ◦ 등)
+        is_list_item = len(stripped) < 200 and re.match(r'^\s*([□◦\-\u25e6\u2022\u25a1\u25cb\u2023\u25a0]|[\d]{1,2}[\.\)])', line)
+
+        if is_header:
+            _flush_data()
+            _flush_body()
+            blocks.append({
+                "id": f"p{page_num}_b{block_idx}",
+                "type": "title",
+                "bbox": [0, 0, 0, 0],
+                "text": line.strip(),
+                "page_num": page_num,
+                "source": "doc_parser",
+                "score": 1.0,
+                "meta": {}
+            })
+            block_idx += 1
+        elif not stripped:
+            # 빈 줄: 블록 단절 생성
+            _flush_data()
+            _flush_body()
+        elif is_list_item:
+            # 목록 아이템 시작: 이전 버퍼 비우고 새 블록 유도
+            _flush_data()
+            _flush_body()
+            if is_data:
+                current_data_lines.append(line)
+            else:
+                current_body_lines.append(line)
+        elif is_data:
+            # 데이터 행: 바디 버퍼가 있으면 비우고 데이터 버퍼로
+            if current_body_lines:
+                _flush_body()
+            current_data_lines.append(line)
+        else:
+            # 일반 텍스트: 데이터 버퍼가 있으면 비우고 바디 버퍼로
+            if current_data_lines:
+                _flush_data()
+            current_body_lines.append(line)
+
+    _flush_data()
+    _flush_body()
+    
+    # 흡수 최적화 (파편 문장 합치기)
+    blocks = _absorb_tiny_fragments_sequential(blocks)
+    
+    return blocks
+
+def _absorb_tiny_fragments_sequential(blocks: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """DOC/HWP 등 bbox가 없는 순차적 블록의 조각을 인접 블록으로 흡수"""
+    if not blocks: return []
+    out = []
+    
+    for i, b in enumerate(blocks):
+        text = b.get("text", "")
+        # Tiny chunk (under 30 chars, single line, no structural header numbers)
+        if b["type"] == "text" and len(text) < 30 and "\n" not in text and not (len(text) < 5 and text.strip().isdigit()):
+            # Absorb to the previous block if text type, otherwise next block
+            if out and out[-1]["type"] == "text":
+                out[-1]["text"] += "\n" + text.strip()
+            elif i + 1 < len(blocks) and blocks[i+1]["type"] == "text":
+                blocks[i+1]["text"] = text.strip() + "\n" + blocks[i+1].get("text", "")
+            else:
+                out.append(b)
+        else:
+            out.append(b)
+            
+    return out
+
+
+def _generate_doc_rag_text(blocks: list[dict[str, Any]]) -> str:
+    """DOC 전용 RAG 텍스트 생성 (PDF와 유사한 스키마 사용)"""
+    parts = []
+    for b in blocks:
+        btype = b["type"]
+        text = b.get("text", "").strip()
+        if not text: continue
+        
+        if btype == "title":
+            parts.append(f"\n[SECTION: {text}]\n")
+        elif btype == "text":
+            parts.append(text)
+        elif btype == "table":
+            parts.append(f"\n[TABLE data in text form: {text[:200]}...]\n")
+    return "\n\n".join(parts).strip()
+
+
 # ── public entry point ───────────────────────────────────────────────
 
 def parse_doc(filepath: str) -> dict[str, Any]:
     ext = os.path.splitext(filepath)[1].lower()
-
-    if ext == ".docx":
-        return _parse_docx(filepath)
-
     errors: list[str] = []
 
-    for name, fn in [
-        ("tika", _parse_doc_tika),
-        ("win32com", _parse_doc_win32),
-        ("OLE binary", _parse_doc_binary),
-    ]:
+    strategies = []
+    if ext == ".docx":
+        strategies.append(("python-docx", _parse_docx))
+    else:
+        strategies.extend([
+            ("tika", _parse_doc_tika),
+            ("win32com", _parse_doc_win32),
+            ("OLE binary", _parse_doc_binary),
+        ])
+
+    for name, fn in strategies:
         try:
             result = fn(filepath)
             result.setdefault("metadata", {})["parse_strategies_tried"] = (
                 errors if errors else [f"{name} (first attempt)"]
             )
+            
+            # ── Document Routing ──────────────────────────────
+            from .document_router import route_document
+            pages = result.get("pages", [])
+            meta = result.get("metadata", {})
+            routing_result = route_document(None, pages, metadata=meta)
+            
+            doc_type = routing_result.get("document_type", "text_report")
+            meta.update({
+                "document_type": doc_type,
+                "routing_signals": routing_result.get("routing_signals"),
+                "routing_reason": routing_result.get("routing_reason")
+            })
+            
+            for p in pages:
+                p.setdefault("parser_debug", {})["document_type"] = doc_type
+                # RAG Text Generation
+                p["rag_text"] = _generate_doc_rag_text(p.get("blocks", []))
+                
             return result
         except Exception as exc:
             msg = f"{name}: {exc}"
@@ -85,6 +309,7 @@ def _parse_docx(filepath: str) -> dict[str, Any]:
         "parser_used": "python-docx",
     }
 
+    sec_blocks = _split_into_section_blocks(full_text)
     pages = [{
         "page_num": 1,
         "page_width": 0,
@@ -97,16 +322,7 @@ def _parse_docx(filepath: str) -> dict[str, Any]:
         "preview_image": None,
         "text": full_text,
         "tables": tables,
-        "blocks": [{
-            "id": "p1_b0",
-            "type": "text",
-            "bbox": [0, 0, 0, 0],
-            "text": full_text,
-            "page_num": 1,
-            "source": "doc_parser",
-            "score": 1.0,
-            "meta": {}
-        }] if full_text else [],
+        "blocks": sec_blocks,
         "image_count": 0,
         "text_source": "native",
         "ocr_applied": False,
@@ -119,15 +335,19 @@ def _parse_docx(filepath: str) -> dict[str, Any]:
             "ocr_trigger_reason": "ocr_not_needed",
             "candidate_counts": {
                 "raw_text_blocks": 1 if full_text else 0,
-                "final_blocks": 1 if full_text else 0
+                "final_blocks": len(sec_blocks)
             },
             "block_type_counts": {
-                "text": 1 if full_text else 0
+                "title": sum(1 for b in sec_blocks if b["type"] == "title"),
+                "text": sum(1 for b in sec_blocks if b["type"] == "text")
             },
             "dropped_blocks": [],
-            "bbox_warnings": []
+            "bbox_warnings": [],
+            "narrative_analysis": _analyze_narrative_characteristics(full_text)
         }
     }]
+    
+    metadata["narrative_analysis"] = pages[0]["parser_debug"]["narrative_analysis"]
     return {"pages": pages, "metadata": metadata, "status": "success"}
 
 
@@ -154,6 +374,7 @@ def _parse_doc_tika(filepath: str) -> dict[str, Any]:
         "tika_content_type": tika_meta.get("Content-Type", ""),
     }
 
+    sec_blocks = _split_into_section_blocks(full_text)
     pages = [{
         "page_num": 1,
         "page_width": 0,
@@ -166,16 +387,7 @@ def _parse_doc_tika(filepath: str) -> dict[str, Any]:
         "preview_image": None,
         "text": full_text,
         "tables": [],
-        "blocks": [{
-            "id": "p1_b0",
-            "type": "text",
-            "bbox": [0, 0, 0, 0],
-            "text": full_text,
-            "page_num": 1,
-            "source": "doc_parser",
-            "score": 1.0,
-            "meta": {}
-        }] if full_text else [],
+        "blocks": sec_blocks,
         "image_count": 0,
         "text_source": "native",
         "ocr_applied": False,
@@ -188,15 +400,19 @@ def _parse_doc_tika(filepath: str) -> dict[str, Any]:
             "ocr_trigger_reason": "ocr_not_needed",
             "candidate_counts": {
                 "raw_text_blocks": 1 if full_text else 0,
-                "final_blocks": 1 if full_text else 0
+                "final_blocks": len(sec_blocks)
             },
             "block_type_counts": {
-                "text": 1 if full_text else 0
+                "title": sum(1 for b in sec_blocks if b["type"] == "title"),
+                "text": sum(1 for b in sec_blocks if b["type"] == "text")
             },
             "dropped_blocks": [],
-            "bbox_warnings": []
+            "bbox_warnings": [],
+            "narrative_analysis": _analyze_narrative_characteristics(full_text)
         }
     }]
+    
+    metadata["narrative_analysis"] = pages[0]["parser_debug"]["narrative_analysis"]
     return {"pages": pages, "metadata": metadata, "status": "success"}
 
 
@@ -230,6 +446,7 @@ def _parse_doc_win32(filepath: str) -> dict[str, Any]:
         "char_count": len(full_text),
         "parser_used": "win32com (Microsoft Word)",
     }
+    sec_blocks = _split_into_section_blocks(full_text)
     pages = [{
         "page_num": 1,
         "page_width": 0,
@@ -242,16 +459,7 @@ def _parse_doc_win32(filepath: str) -> dict[str, Any]:
         "preview_image": None,
         "text": full_text,
         "tables": [],
-        "blocks": [{
-            "id": "p1_b0",
-            "type": "text",
-            "bbox": [0, 0, 0, 0],
-            "text": full_text,
-            "page_num": 1,
-            "source": "doc_parser",
-            "score": 1.0,
-            "meta": {}
-        }] if full_text else [],
+        "blocks": sec_blocks,
         "image_count": 0,
         "text_source": "native",
         "ocr_applied": False,
@@ -264,15 +472,19 @@ def _parse_doc_win32(filepath: str) -> dict[str, Any]:
             "ocr_trigger_reason": "ocr_not_needed",
             "candidate_counts": {
                 "raw_text_blocks": 1 if full_text else 0,
-                "final_blocks": 1 if full_text else 0
+                "final_blocks": len(sec_blocks)
             },
             "block_type_counts": {
-                "text": 1 if full_text else 0
+                "title": sum(1 for b in sec_blocks if b["type"] == "title"),
+                "text": sum(1 for b in sec_blocks if b["type"] == "text")
             },
             "dropped_blocks": [],
-            "bbox_warnings": []
+            "bbox_warnings": [],
+            "narrative_analysis": _analyze_narrative_characteristics(full_text)
         }
     }]
+    
+    metadata["narrative_analysis"] = pages[0]["parser_debug"]["narrative_analysis"]
     return {"pages": pages, "metadata": metadata, "status": "success"}
 
 
@@ -297,6 +509,7 @@ def _parse_doc_binary(filepath: str) -> dict[str, Any]:
         "char_count": len(full_text),
         "parser_used": "OLE binary (piece table)",
     }
+    sec_blocks = _split_into_section_blocks(full_text)
     pages = [{
         "page_num": 1,
         "page_width": 0,
@@ -309,16 +522,7 @@ def _parse_doc_binary(filepath: str) -> dict[str, Any]:
         "preview_image": None,
         "text": full_text,
         "tables": [],
-        "blocks": [{
-            "id": "p1_b0",
-            "type": "text",
-            "bbox": [0, 0, 0, 0],
-            "text": full_text,
-            "page_num": 1,
-            "source": "doc_parser",
-            "score": 1.0,
-            "meta": {}
-        }] if full_text else [],
+        "blocks": sec_blocks,
         "image_count": 0,
         "text_source": "native",
         "ocr_applied": False,
@@ -331,15 +535,19 @@ def _parse_doc_binary(filepath: str) -> dict[str, Any]:
             "ocr_trigger_reason": "ocr_not_needed",
             "candidate_counts": {
                 "raw_text_blocks": 1 if full_text else 0,
-                "final_blocks": 1 if full_text else 0
+                "final_blocks": len(sec_blocks)
             },
             "block_type_counts": {
-                "text": 1 if full_text else 0
+                "title": sum(1 for b in sec_blocks if b["type"] == "title"),
+                "text": sum(1 for b in sec_blocks if b["type"] == "text")
             },
             "dropped_blocks": [],
-            "bbox_warnings": []
+            "bbox_warnings": [],
+            "narrative_analysis": _analyze_narrative_characteristics(full_text)
         }
     }]
+    
+    metadata["narrative_analysis"] = pages[0]["parser_debug"]["narrative_analysis"]
     return {"pages": pages, "metadata": metadata, "status": "success"}
 
 

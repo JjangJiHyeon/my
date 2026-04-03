@@ -1,0 +1,818 @@
+{
+  "documents/DS투자증권 시황분석 리포트.pdf": {
+    "filename": "DS투자증권 시황분석 리포트.pdf",
+    "score": 30.31,
+    "metrics": {
+      "empty_table_count": 0,
+      "false_positive_table_count": 0,
+      "fragmented_table_count": 0,
+      "decorative_leakage_count": 0,
+      "ocr_fragment_count": 35,
+      "giant_dump_count": 0,
+      "table_quality_sum": 13.743867172621986,
+      "table_count": 4,
+      "visual_with_data_count": 0,
+      "total_visual_count": 35,
+      "page_count": 1
+    },
+    "page_details": [
+      {
+        "page_num": 1,
+        "failures": [
+          "ocr_fragment",
+          "table",
+          "total_visual"
+        ]
+      }
+    ],
+    "elapsed_sec": 32.19
+  },
+  "documents/미래에셋증권 1분기 실적보고서.pdf": {
+    "filename": "미래에셋증권 1분기 실적보고서.pdf",
+    "score": 20.0,
+    "metrics": {
+      "empty_table_count": 29,
+      "false_positive_table_count": 26,
+      "fragmented_table_count": 0,
+      "decorative_leakage_count": 112,
+      "ocr_fragment_count": 8,
+      "giant_dump_count": 0,
+      "table_quality_sum": 10.0,
+      "table_count": 34,
+      "visual_with_data_count": 0,
+      "total_visual_count": 122,
+      "page_count": 19
+    },
+    "page_details": [
+      {
+        "page_num": 1,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 2,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 3,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 4,
+        "failures": [
+          "decorative_leakage",
+          "ocr_fragment",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 5,
+        "failures": [
+          "empty_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 6,
+        "failures": [
+          "empty_table",
+          "false_positive_table",
+          "decorative_leakage",
+          "ocr_fragment",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 7,
+        "failures": [
+          "empty_table",
+          "false_positive_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 8,
+        "failures": [
+          "empty_table",
+          "false_positive_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 9,
+        "failures": [
+          "empty_table",
+          "false_positive_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 10,
+        "failures": [
+          "empty_table",
+          "false_positive_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 11,
+        "failures": [
+          "empty_table",
+          "false_positive_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 12,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 13,
+        "failures": [
+          "decorative_leakage",
+          "ocr_fragment",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 14,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 15,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 16,
+        "failures": [
+          "empty_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 17,
+        "failures": [
+          "empty_table",
+          "false_positive_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 18,
+        "failures": [
+          "empty_table",
+          "false_positive_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 19,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      }
+    ],
+    "elapsed_sec": 225.48
+  },
+  "documents/미래에셋증권 2분기 실적보고서.pdf": {
+    "filename": "미래에셋증권 2분기 실적보고서.pdf",
+    "score": 20.0,
+    "metrics": {
+      "empty_table_count": 28,
+      "false_positive_table_count": 24,
+      "fragmented_table_count": 0,
+      "decorative_leakage_count": 118,
+      "ocr_fragment_count": 7,
+      "giant_dump_count": 0,
+      "table_quality_sum": 11.0,
+      "table_count": 33,
+      "visual_with_data_count": 0,
+      "total_visual_count": 127,
+      "page_count": 19
+    },
+    "page_details": [
+      {
+        "page_num": 1,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 2,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 3,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 4,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 5,
+        "failures": [
+          "empty_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 6,
+        "failures": [
+          "empty_table",
+          "false_positive_table",
+          "decorative_leakage",
+          "ocr_fragment",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 7,
+        "failures": [
+          "empty_table",
+          "false_positive_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 8,
+        "failures": [
+          "empty_table",
+          "false_positive_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 9,
+        "failures": [
+          "empty_table",
+          "false_positive_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 10,
+        "failures": [
+          "empty_table",
+          "false_positive_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 11,
+        "failures": [
+          "empty_table",
+          "false_positive_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 12,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 13,
+        "failures": [
+          "decorative_leakage",
+          "ocr_fragment",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 14,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 15,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 16,
+        "failures": [
+          "empty_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 17,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 18,
+        "failures": [
+          "empty_table",
+          "false_positive_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 19,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      }
+    ],
+    "elapsed_sec": 220.57
+  },
+  "documents/미래에셋증권 3분기 실적보고서.pdf": {
+    "filename": "미래에셋증권 3분기 실적보고서.pdf",
+    "score": 20.0,
+    "metrics": {
+      "empty_table_count": 27,
+      "false_positive_table_count": 24,
+      "fragmented_table_count": 0,
+      "decorative_leakage_count": 119,
+      "ocr_fragment_count": 7,
+      "giant_dump_count": 0,
+      "table_quality_sum": 10.0,
+      "table_count": 32,
+      "visual_with_data_count": 0,
+      "total_visual_count": 128,
+      "page_count": 19
+    },
+    "page_details": [
+      {
+        "page_num": 1,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 2,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 3,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 4,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 5,
+        "failures": [
+          "empty_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 6,
+        "failures": [
+          "empty_table",
+          "false_positive_table",
+          "decorative_leakage",
+          "ocr_fragment",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 7,
+        "failures": [
+          "empty_table",
+          "false_positive_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 8,
+        "failures": [
+          "empty_table",
+          "false_positive_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 9,
+        "failures": [
+          "empty_table",
+          "false_positive_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 10,
+        "failures": [
+          "empty_table",
+          "false_positive_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 11,
+        "failures": [
+          "empty_table",
+          "false_positive_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 12,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 13,
+        "failures": [
+          "decorative_leakage",
+          "ocr_fragment",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 14,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 15,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 16,
+        "failures": [
+          "empty_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 17,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 18,
+        "failures": [
+          "empty_table",
+          "false_positive_table",
+          "decorative_leakage",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 19,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      }
+    ],
+    "elapsed_sec": 157.15
+  },
+  "documents/미래에셋증권 4분기 실적보고서.pdf": {
+    "filename": "미래에셋증권 4분기 실적보고서.pdf",
+    "score": 34.65,
+    "metrics": {
+      "empty_table_count": 0,
+      "false_positive_table_count": 0,
+      "fragmented_table_count": 0,
+      "decorative_leakage_count": 17,
+      "ocr_fragment_count": 31,
+      "giant_dump_count": 0,
+      "table_quality_sum": 503.1269964338147,
+      "table_count": 103,
+      "visual_with_data_count": 0,
+      "total_visual_count": 49,
+      "page_count": 19
+    },
+    "page_details": [
+      {
+        "page_num": 1,
+        "failures": [
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 2,
+        "failures": [
+          "table"
+        ]
+      },
+      {
+        "page_num": 3,
+        "failures": [
+          "decorative_leakage",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 4,
+        "failures": [
+          "table"
+        ]
+      },
+      {
+        "page_num": 5,
+        "failures": [
+          "table"
+        ]
+      },
+      {
+        "page_num": 6,
+        "failures": [
+          "table"
+        ]
+      },
+      {
+        "page_num": 7,
+        "failures": [
+          "table"
+        ]
+      },
+      {
+        "page_num": 8,
+        "failures": [
+          "table"
+        ]
+      },
+      {
+        "page_num": 9,
+        "failures": [
+          "table"
+        ]
+      },
+      {
+        "page_num": 10,
+        "failures": [
+          "table"
+        ]
+      },
+      {
+        "page_num": 11,
+        "failures": [
+          "table"
+        ]
+      },
+      {
+        "page_num": 12,
+        "failures": [
+          "table"
+        ]
+      },
+      {
+        "page_num": 13,
+        "failures": [
+          "ocr_fragment",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 14,
+        "failures": [
+          "decorative_leakage",
+          "ocr_fragment",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 15,
+        "failures": [
+          "decorative_leakage",
+          "ocr_fragment",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 16,
+        "failures": [
+          "decorative_leakage",
+          "ocr_fragment",
+          "table",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 17,
+        "failures": [
+          "decorative_leakage",
+          "ocr_fragment",
+          "total_visual"
+        ]
+      },
+      {
+        "page_num": 18,
+        "failures": [
+          "table"
+        ]
+      },
+      {
+        "page_num": 19,
+        "failures": [
+          "ocr_fragment",
+          "total_visual"
+        ]
+      }
+    ],
+    "elapsed_sec": 31.55
+  },
+  "documents/한화투자증권 두산밥캣 기업분석 리포트.pdf": {
+    "filename": "한화투자증권 두산밥캣 기업분석 리포트.pdf",
+    "score": 63.76,
+    "metrics": {
+      "empty_table_count": 0,
+      "false_positive_table_count": 0,
+      "fragmented_table_count": 0,
+      "decorative_leakage_count": 0,
+      "ocr_fragment_count": 0,
+      "giant_dump_count": 0,
+      "table_quality_sum": 36.69568355539133,
+      "table_count": 8,
+      "visual_with_data_count": 0,
+      "total_visual_count": 0,
+      "page_count": 5
+    },
+    "page_details": [
+      {
+        "page_num": 1,
+        "failures": [
+          "table"
+        ]
+      },
+      {
+        "page_num": 2,
+        "failures": [
+          "table"
+        ]
+      },
+      {
+        "page_num": 3,
+        "failures": [
+          "table"
+        ]
+      },
+      {
+        "page_num": 4,
+        "failures": [
+          "table"
+        ]
+      },
+      {
+        "page_num": 5,
+        "failures": [
+          "table"
+        ]
+      }
+    ],
+    "elapsed_sec": 9.21
+  },
+  "documents/금융감독원 251125_(보도자료) 25.10월중 기업의 직접금융 조달실적.doc": {
+    "filename": "금융감독원 251125_(보도자료) 25.10월중 기업의 직접금융 조달실적.doc",
+    "score": 50.0,
+    "metrics": {
+      "empty_table_count": 0,
+      "false_positive_table_count": 0,
+      "fragmented_table_count": 0,
+      "decorative_leakage_count": 0,
+      "ocr_fragment_count": 0,
+      "giant_dump_count": 0,
+      "table_quality_sum": 0.0,
+      "table_count": 0,
+      "visual_with_data_count": 0,
+      "total_visual_count": 0,
+      "page_count": 1
+    },
+    "page_details": [
+      {
+        "page_num": 1,
+        "failures": []
+      }
+    ],
+    "elapsed_sec": 0.52
+  },
+  "documents/농협 2022년 9월말 기준 사업보고서.hwp": {
+    "filename": "농협 2022년 9월말 기준 사업보고서.hwp",
+    "score": 50.0,
+    "metrics": {
+      "empty_table_count": 0,
+      "false_positive_table_count": 0,
+      "fragmented_table_count": 0,
+      "decorative_leakage_count": 0,
+      "ocr_fragment_count": 0,
+      "giant_dump_count": 0,
+      "table_quality_sum": 0.0,
+      "table_count": 0,
+      "visual_with_data_count": 0,
+      "total_visual_count": 0,
+      "page_count": 1
+    },
+    "page_details": [
+      {
+        "page_num": 1,
+        "failures": []
+      }
+    ],
+    "elapsed_sec": 0.01
+  }
+}

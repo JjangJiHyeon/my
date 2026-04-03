@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parser Quality Summary</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
+    * { font-family: 'Noto Sans KR', 'Inter', sans-serif; }
+    body { background: #0f172a; color: #e2e8f0; }
+    .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; transition: transform 0.2s, box-shadow 0.2s; }
+    .glass-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.5); border-color: rgba(96, 165, 250, 0.3); }
+    .stat-value { font-size: 2.25rem; font-weight: 800; background: linear-gradient(135deg, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .bar-container { background: #1e293b; border-radius: 9999px; height: 10px; overflow: hidden; width: 100%; border: 1px solid rgba(255, 255, 255, 0.05); }
+    .bar-fill { height: 100%; border-radius: 9999px; transition: width 1s ease-out; background: linear-gradient(90deg, #3b82f6, #8b5cf6); }
+    .score-high { color: #10b981; }
+    .score-mid { color: #f59e0b; }
+    .score-low { color: #ef4444; }
+    .failure-badge { font-size: 0.65rem; padding: 2px 8px; border-radius: 6px; background: rgba(51, 65, 85, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); color: #94a3b8; }
+    .table-row { border-bottom: 1px solid rgba(51, 65, 85, 0.5); }
+    .table-row:last-child { border-bottom: none; }
+    .header-gradient { background: radial-gradient(circle at top right, rgba(96, 165, 250, 0.15), transparent 40%), radial-gradient(circle at bottom left, rgba(167, 139, 250, 0.1), transparent 40%); }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+  </style>
+</head>
+<body class="min-h-screen header-gradient p-8">
+  <div class="max-w-6xl mx-auto">
+    <!-- Header -->
+    <header class="flex justify-between items-center mb-10">
+      <div>
+        <h1 class="text-3xl font-bold text-white mb-2">Prototype Quality Dashboard</h1>
+        <p class="text-gray-400">Parsing Performance & Evaluation Metrics Summary</p>
+      </div>
+      <div class="flex gap-4">
+        <button onclick="window.location.href='/'" class="bg-gray-800 hover:bg-gray-700 text-gray-200 px-5 py-2.5 rounded-xl font-semibold border border-gray-700 transition">
+          Back to Viewer
+        </button>
+        <button onclick="window.location.reload()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-semibold shadow-lg shadow-blue-500/20 transition">
+          Refresh Data
+        </button>
+      </div>
+    </header>
+
+    <!-- Top Stats -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10" id="topStats">
+      <div class="glass-card p-6">
+        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Total Documents</div>
+        <div class="stat-value" id="valTotalDocs">-</div>
+      </div>
+      <div class="glass-card p-6">
+        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Avg Quality Score</div>
+        <div class="stat-value" id="valAvgScore">-</div>
+      </div>
+      <div class="glass-card p-6">
+        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Success Rate</div>
+        <div class="stat-value" id="valSuccessRate">-</div>
+      </div>
+      <div class="glass-card p-6">
+        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Total Time</div>
+        <div class="stat-value" id="valTotalTime">-</div>
+      </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Left Column: Detailed Quality List -->
+      <div class="lg:col-span-2">
+        <div class="glass-card p-0 overflow-hidden">
+          <div class="px-6 py-4 border-b border-gray-700 bg-gray-800/50 flex justify-between items-center">
+            <h3 class="font-bold text-white">Document Quality Benchmarks</h3>
+            <span class="text-xs text-gray-500" id="lastUpdated"></span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead class="text-xs text-gray-500 uppercase">
+                <tr>
+                  <th class="px-6 py-4">Filename</th>
+                  <th class="px-6 py-4">Score</th>
+                  <th class="px-6 py-4">Processing</th>
+                  <th class="px-6 py-4 text-right">Failures</th>
+                </tr>
+              </thead>
+              <tbody id="qualityList">
+                <!-- Rows injected here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Failure Analysis & Distribution -->
+      <div class="space-y-8">
+        <!-- Score Distribution -->
+        <div class="glass-card p-6">
+          <h3 class="font-bold text-white mb-4">Score Breakdown</h3>
+          <div id="scoreDistribution" class="space-y-4">
+            <!-- Bars injected here -->
+          </div>
+        </div>
+
+        <!-- Failure Type Heatmap/List -->
+        <div class="glass-card p-6">
+          <h3 class="font-bold text-white mb-4">Primary Failure Sources</h3>
+          <div id="failureSources" class="space-y-3">
+            <!-- Heatmap items injected here -->
+          </div>
+        </div>
+
+        <!-- Raw Report Preview -->
+        <div class="glass-card p-6">
+          <h3 class="font-bold text-white mb-2">Quality Report (MD)</h3>
+          <p class="text-xs text-gray-500 mb-4">Latest generated summary snapshot</p>
+          <div class="bg-gray-900/50 p-4 rounded-lg font-mono text-xs text-gray-400 h-60 overflow-y-auto whitespace-pre-wrap" id="rawReport">
+            Loading report content...
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <footer class="mt-12 text-center text-gray-600 text-sm">
+      <p>&copy; 2026 Advanced Document Parsing Prototype System &bull; Version phase3_v2</p>
+    </footer>
+  </div>
+
+  <script>
+    async function loadStats() {
+      try {
+        const [statsRes, reportRes] = await Promise.all([
+          fetch('/api/prototype-stats'),
+          fetch('/api/quality-report')
+        ]);
+        
+        const historyData = await statsRes.json();
+        const reportData = await reportRes.json();
+        
+        renderStats(historyData);
+        renderReport(reportData.content);
+        
+        document.getElementById('lastUpdated').textContent = 'Last Generated: 2026-03-31';
+      } catch (e) {
+        console.error('Failed to load summary:', e);
+      }
+    }
+
+    function renderStats(data) {
+      const docs = Object.values(data);
+      const totalDocs = docs.length;
+      const avgScore = docs.reduce((a, b) => a + b.score, 0) / totalDocs;
+      const totalTime = docs.reduce((a, b) => a + (b.elapsed_sec || 0), 0);
+      const successCount = docs.filter(d => (d.page_details || []).every(p => p.failures.length === 0)).length;
+      
+      document.getElementById('valTotalDocs').textContent = totalDocs;
+      document.getElementById('valAvgScore').textContent = avgScore.toFixed(1);
+      document.getElementById('valSuccessRate').textContent = Math.round((successCount / totalDocs) * 100) + '%';
+      document.getElementById('valTotalTime').textContent = totalTime.toFixed(1) + 's';
+
+      // Render Quality List
+      const listEl = document.getElementById('qualityList');
+      listEl.innerHTML = docs.map(d => {
+        const scoreColor = d.score >= 50 ? 'score-high' : (d.score >= 30 ? 'score-mid' : 'score-low');
+        const failures = (d.page_details || []).flatMap(p => p.failures);
+        const uniqueFailures = [...new Set(failures)].slice(0, 3);
+        
+        return `
+          <tr class="table-row hover:bg-white/5 transition">
+            <td class="px-6 py-4">
+              <div class="text-sm font-medium text-white truncate max-w-xs" title="${d.filename}">${d.filename}</div>
+              <div class="text-xs text-gray-500">${d.metrics.page_count} Pages</div>
+            </td>
+            <td class="px-6 py-4">
+              <div class="text-sm ${scoreColor} font-bold">${d.score.toFixed(1)}</div>
+              <div class="bar-container mt-1">
+                <div class="bar-fill" style="width: ${d.score}%"></div>
+              </div>
+            </td>
+            <td class="px-6 py-4">
+              <div class="text-sm text-gray-300">${(d.elapsed_sec || 0).toFixed(1)}s</div>
+            </td>
+            <td class="px-6 py-4 text-right">
+              <div class="flex gap-1 justify-end flex-wrap">
+                ${uniqueFailures.map(f => `<span class="failure-badge">${f}</span>`).join('')}
+                ${failures.length > uniqueFailures.length ? `<span class="text-xs text-gray-600 self-center">+${failures.length - uniqueFailures.length}</span>` : ''}
+                ${failures.length === 0 ? '<span class="text-xs text-green-500 font-bold uppercase tracking-tighter">Pass</span>' : ''}
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      // Build Score Distribution
+      const scores = { 'High (50+)': 0, 'Mid (30-50)': 0, 'Low (<30)': 0 };
+      docs.forEach(d => {
+        if (d.score >= 50) scores['High (50+)']++;
+        else if (d.score >= 30) scores['Mid (30-50)']++;
+        else scores['Low (<30)']++;
+      });
+      
+      document.getElementById('scoreDistribution').innerHTML = Object.entries(scores).map(([label, count]) => `
+        <div>
+          <div class="flex justify-between text-xs mb-1">
+            <span class="text-gray-400">${label}</span>
+            <span class="text-gray-200">${count} Docs</span>
+          </div>
+          <div class="bar-container">
+            <div class="bar-fill" style="width: ${(count/totalDocs*100).toFixed(0)}%; background: ${label.includes('High') ? '#10b981' : (label.includes('Mid') ? '#f59e0b' : '#ef4444')}"></div>
+          </div>
+        </div>
+      `).join('');
+
+      // Extract Global Failures for heatmap
+      const failMap = {};
+      docs.forEach(d => {
+        (d.page_details || []).flatMap(p => p.failures).forEach(f => {
+          failMap[f] = (failMap[f] || 0) + 1;
+        });
+      });
+      
+      const sortedFails = Object.entries(failMap).sort((a, b) => b[1] - a[1]);
+      document.getElementById('failureSources').innerHTML = sortedFails.map(([type, count]) => `
+        <div class="flex items-center justify-between p-2 rounded-lg bg-white/5 border border-white/5">
+          <span class="text-xs text-gray-300 font-mono">${type}</span>
+          <span class="text-xs font-bold text-blue-400">${count}</span>
+        </div>
+      `).join('');
+    }
+
+    function renderReport(content) {
+      const el = document.getElementById('rawReport');
+      el.textContent = content;
+    }
+
+    loadStats();
+  </script>
+</body>
+</html>

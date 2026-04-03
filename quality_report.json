@@ -1,0 +1,164 @@
+[
+  {
+    "file": "DS투자증권 시황분석 리포트.pdf",
+    "doc_type": "dashboard_brief",
+    "pipeline": "dashboard_brief_pipeline",
+    "pages": 1,
+    "total_blocks": 5,
+    "avg_blocks_per_page": 5.0,
+    "singleton_text_ratio": 0.0,
+    "tiny_text_ratio": 0.0,
+    "title_count": 0,
+    "text_count": 1,
+    "table_count": 4,
+    "image_count": 0,
+    "salvage_applied": false,
+    "worst_pages": [
+      1
+    ],
+    "summary_ready_score": 100
+  },
+  {
+    "file": "금융감독원 251125_(보도자료) 25.10월중 기업의 직접금융 조달실적.doc",
+    "doc_type": "dashboard_brief",
+    "pipeline": "unknown",
+    "pages": 1,
+    "total_blocks": 275,
+    "avg_blocks_per_page": 275.0,
+    "singleton_text_ratio": 0.102,
+    "tiny_text_ratio": 0.387,
+    "title_count": 19,
+    "text_count": 256,
+    "table_count": 0,
+    "image_count": 0,
+    "salvage_applied": false,
+    "worst_pages": [
+      1
+    ],
+    "summary_ready_score": 100
+  },
+  {
+    "file": "미래에셋증권 4분기 실적보고서.pdf",
+    "doc_type": "slide_ir",
+    "pipeline": "slide_ir_pipeline",
+    "pages": 19,
+    "total_blocks": 337,
+    "avg_blocks_per_page": 17.74,
+    "singleton_text_ratio": 0.641,
+    "tiny_text_ratio": 0.789,
+    "title_count": 0,
+    "text_count": 223,
+    "table_count": 114,
+    "image_count": 0,
+    "salvage_applied": true,
+    "worst_pages": [
+      7,
+      6,
+      8
+    ],
+    "summary_ready_score": 80
+  },
+  {
+    "file": "미래에셋증권 3분기 실적보고서.pdf",
+    "doc_type": "slide_ir",
+    "pipeline": "slide_ir_pipeline",
+    "pages": 19,
+    "total_blocks": 194,
+    "avg_blocks_per_page": 10.21,
+    "singleton_text_ratio": 0.726,
+    "tiny_text_ratio": 0.871,
+    "title_count": 0,
+    "text_count": 124,
+    "table_count": 70,
+    "image_count": 0,
+    "salvage_applied": true,
+    "worst_pages": [
+      10,
+      7,
+      5
+    ],
+    "summary_ready_score": 80
+  },
+  {
+    "file": "미래에셋증권 2분기 실적보고서.pdf",
+    "doc_type": "slide_ir",
+    "pipeline": "slide_ir_pipeline",
+    "pages": 19,
+    "total_blocks": 195,
+    "avg_blocks_per_page": 10.26,
+    "singleton_text_ratio": 0.746,
+    "tiny_text_ratio": 0.881,
+    "title_count": 0,
+    "text_count": 126,
+    "table_count": 69,
+    "image_count": 0,
+    "salvage_applied": true,
+    "worst_pages": [
+      7,
+      10,
+      5
+    ],
+    "summary_ready_score": 80
+  },
+  {
+    "file": "미래에셋증권 1분기 실적보고서.pdf",
+    "doc_type": "slide_ir",
+    "pipeline": "slide_ir_pipeline",
+    "pages": 19,
+    "total_blocks": 220,
+    "avg_blocks_per_page": 11.58,
+    "singleton_text_ratio": 0.746,
+    "tiny_text_ratio": 0.913,
+    "title_count": 0,
+    "text_count": 138,
+    "table_count": 82,
+    "image_count": 0,
+    "salvage_applied": true,
+    "worst_pages": [
+      10,
+      7,
+      5
+    ],
+    "summary_ready_score": 80
+  },
+  {
+    "file": "한화투자증권 두산밥캣 기업분석 리포트.pdf",
+    "doc_type": "text_report",
+    "pipeline": "text_report_pipeline",
+    "pages": 5,
+    "total_blocks": 174,
+    "avg_blocks_per_page": 34.8,
+    "singleton_text_ratio": 0.17,
+    "tiny_text_ratio": 0.388,
+    "title_count": 0,
+    "text_count": 165,
+    "table_count": 9,
+    "image_count": 0,
+    "salvage_applied": false,
+    "worst_pages": [
+      3,
+      2,
+      1
+    ],
+    "summary_ready_score": 100
+  },
+  {
+    "file": "농협 2022년 9월말 기준 사업보고서.hwp",
+    "doc_type": "dashboard_brief",
+    "pipeline": "unknown",
+    "pages": 1,
+    "total_blocks": 419,
+    "avg_blocks_per_page": 419.0,
+    "singleton_text_ratio": 1.0,
+    "tiny_text_ratio": 0.984,
+    "title_count": 45,
+    "text_count": 374,
+    "table_count": 0,
+    "image_count": 0,
+    "salvage_applied": false,
+    "worst_pages": [
+      1
+    ],
+    "summary_ready_score": 55
+  }
+]

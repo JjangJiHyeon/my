@@ -13,10 +13,13 @@ import os
 import time
 from typing import Any, Callable
 
+PARSER_VERSION = "phase3_v2_quality_patch1"
+
 from .pdf_parser import parse_pdf
 from .doc_parser import parse_doc
 from .hwp_parser import parse_hwp
 from .xlsx_parser import parse_excel
+from .quality_utils import calculate_quality_score
 
 ParserFn = Callable[[str], dict[str, Any]]
 
@@ -82,11 +85,17 @@ def parse_document(filepath: str) -> dict[str, Any]:
         ocr_applied_any = any(p.get("ocr_applied") for p in pages)
         meta["ocr_applied"] = ocr_applied_any
 
+        # Calculate quality grading
+        q_eval = calculate_quality_score(result)
+        meta["quality_score"] = q_eval["score"]
+        meta["quality_grade"] = q_eval["grade"]
+        meta["quality_metrics"] = q_eval["metrics"]
+
         status = result.get("status", "success")
         if status == "success" and meta["total_chars"] == 0:
             status = "partial"
 
-        return {**base, **result, "status": status}
+        return {**base, **result, "status": status, "parser_version": PARSER_VERSION}
 
     except Exception as exc:
         elapsed = round(time.time() - start, 2)
@@ -96,4 +105,5 @@ def parse_document(filepath: str) -> dict[str, Any]:
             "error": f"{type(exc).__name__}: {exc}",
             "pages": [],
             "metadata": {"parse_time_sec": elapsed, "ocr_applied": False},
+            "parser_version": PARSER_VERSION
         }

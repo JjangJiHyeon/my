@@ -1,0 +1,928 @@
+{
+  "doc_title": "미래에셋증권 1분기 실적보고서",
+  "source_file": "미래에셋증권 1분기 실적보고서.pdf",
+  "page_count": 19,
+  "chunks": [
+    {
+      "chunk_id": "c1",
+      "page_start": 1,
+      "page_end": 1,
+      "section_title": "Cover / Intro",
+      "chunk_type": "cover_page",
+      "source_block_ids": [],
+      "text": "[Cover Page - Visual or Empty]",
+      "linked_visual_summaries": [],
+      "provenance": {
+        "doc_title": "미래에셋증권 1분기 실적보고서",
+        "parser_used": "PyMuPDF + pdfplumber + Camelot + EasyOCR/pytesseract",
+        "pages": [
+          1
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "chunk_id": "c2",
+      "page_start": 2,
+      "page_end": 2,
+      "section_title": "Cover / Intro",
+      "chunk_type": "cover_page",
+      "source_block_ids": [
+        "p2_b0"
+      ],
+      "text": "2025년1분기실적보고서Contents2025년1분기실적32025년1분기실적요약2Key Highlights4",
+      "linked_visual_summaries": [],
+      "provenance": {
+        "doc_title": "미래에셋증권 1분기 실적보고서",
+        "parser_used": "PyMuPDF + pdfplumber + Camelot + EasyOCR/pytesseract",
+        "pages": [
+          2
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "chunk_id": "c3",
+      "page_start": 3,
+      "page_end": 3,
+      "section_title": "2025년1분기실적보고서2025중점사업추진전략PRIORITIES FOR 2025글로벌비즈니스수",
+      "chunk_type": "narrative",
+      "source_block_ids": [
+        "p3_b0",
+        "p3_b8",
+        "p3_b9",
+        "p3_b10",
+        "p3_b11",
+        "p3_b12",
+        "p3_b14",
+        "p3_b15"
+      ],
+      "text": "2025년1분기실적보고서2025중점사업추진전략PRIORITIES FOR 2025글로벌비즈니스수\n\n2025년 1분기 실적보고서\n\n2025 중점사업 추진전락\n\nPRIORITIES FOR 2025\n\nGlobal WM과 연금 중심 '수의 창출 역량 제고'\n\n글로벌 비즈니스 수의성 개선\n\nAl 경쟁력 강화\n\n주주가치제고",
+      "linked_visual_summaries": [],
+      "provenance": {
+        "doc_title": "미래에셋증권 1분기 실적보고서",
+        "parser_used": "PyMuPDF + pdfplumber + Camelot + EasyOCR/pytesseract",
+        "pages": [
+          3
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "chunk_id": "c4",
+      "page_start": 4,
+      "page_end": 4,
+      "section_title": "2025년1분기실적보고서[1Q2025]Key Highlights해외주식Brokerage수익, 분기최대기록",
+      "chunk_type": "narrative",
+      "source_block_ids": [
+        "p4_b0",
+        "p4_b1",
+        "p4_b2"
+      ],
+      "text": "2025년1분기실적보고서[1Q2025]Key Highlights해외주식Brokerage수익, 분기최대기록\n\n해외주식수수료수익1,012억원기록-전체브로커리지수익1,987억원기록1Q25 (별도) 순영업수익1Q25(연결)세전& \n해외법인세전이익1,196억원기록-선진국약진, 수익비중\n\n투자목적자산손익약900억원으로흑자전환-해외혁신기업\nWM수수료수익784억원기록-랩어카운트288억원수익기록",
+      "linked_visual_summaries": [
+        {
+          "id": "s_p4_b4",
+          "type": "image_like_summary",
+          "source_block_id": "p4_b4",
+          "bbox": [
+            30.48,
+            317.28,
+            384.48,
+            420.48
+          ],
+          "confidence": 1.0,
+          "text": "[IMAGE] 제목: 2025년1분기실적보고서[1Q2025]Key Highlights해외주식Brokerage수익, 분기최대기록\n내부 텍스트: 해외주식 Brokerage 수의, 분기 최대 기록 해외주식 수수로 수의 1,012억 원 기록 전체 브로커리지 수의 7,987억 원 기록\n주변 설명(하): (앞서 언급된 내용과 동일)",
+          "meta": {
+            "source_type": "image",
+            "visual_subtype": "image",
+            "associated_title": "2025년1분기실적보고서[1Q2025]Key Highlights해외주식Brokerage수익, 분기최대기록",
+            "used_context_blocks": true,
+            "summary_generation_method": "visual_ocr",
+            "visual_ocr_text": "해외주식 Brokerage 수의, 분기 최대 기록 해외주식 수수로 수의 1,012억 원 기록 전체 브로커리지 수의 7,987억 원 기록",
+            "legend_candidates": [],
+            "numeric_tokens": [
+              "해외주식 수수로 수의 1,012억 원 기록",
+              "전체 브로커리지 수의 7,987억 원 기록"
+            ],
+            "used_ocr": true,
+            "judgment_values": {
+              "ocr_text_length": 75,
+              "area_ratio": 1.0,
+              "meaningful_letters": 47,
+              "has_ass_title": true,
+              "has_context": true
+            }
+          }
+        }
+      ],
+      "provenance": {
+        "doc_title": "미래에셋증권 1분기 실적보고서",
+        "parser_used": "PyMuPDF + pdfplumber + Camelot + EasyOCR/pytesseract",
+        "pages": [
+          4
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "chunk_id": "c5",
+      "page_start": 5,
+      "page_end": 5,
+      "section_title": "2025년1분기실적보고서2025년1분기재무실적요약요약손익계산서1Q242Q243Q244Q241Q25순영업수익545.65",
+      "chunk_type": "narrative",
+      "source_block_ids": [
+        "p5_b0"
+      ],
+      "text": "2025년1분기실적보고서2025년1분기재무실적요약요약손익계산서1Q242Q243Q244Q241Q25순영업수익545.65",
+      "linked_visual_summaries": [],
+      "provenance": {
+        "doc_title": "미래에셋증권 1분기 실적보고서",
+        "parser_used": "PyMuPDF + pdfplumber + Camelot + EasyOCR/pytesseract",
+        "pages": [
+          5
+        ]
+      },
+      "warnings": [
+        "High numeric density data - highly tabular/dashboard-like"
+      ]
+    },
+    {
+      "chunk_id": "c6",
+      "page_start": 6,
+      "page_end": 7,
+      "section_title": "–Brokerage(별도)해외주식수수료‘분기최대’수익달성. Brokerage 사업성",
+      "chunk_type": "narrative",
+      "source_block_ids": [
+        "p6_b1",
+        "p6_b2",
+        "p6_b3",
+        "p7_b2"
+      ],
+      "text": "–Brokerage(별도)해외주식수수료‘분기최대’수익달성. Brokerage 사업성\n\nBrokerage수수료수익1,987억원기록(QoQ+10%)\n국내일평균거래대금증가(QoQ+15%)로국내주식수수료수익975억원(QoQ+11%) 달성\n해외주식수수료이벤트종료에따른해외주식평균수수료율증가(QoQ+1.7bp). 해외주식수수료수익1,012억원(QoQ+9%) 기록1Q24\n\n(조원\n)*평균수수료율: ETF, ETN, ELW 포함1Q242Q243Q244Q241Q2557.462.162.763.665.3신용손익(이자손익내반영)\n(조원\n)\n\nWM수수료수익784억원기록(QoQ+11%)\n랩어카운트수수료수익288억원(QoQ+17%), 집합투자증권수수료수익226억원(QoQ+16%) 기록\n연금자산44.4조원(QoQ+4%) 기록하며우상향추이유지",
+      "linked_visual_summaries": [],
+      "provenance": {
+        "doc_title": "미래에셋증권 1분기 실적보고서",
+        "parser_used": "PyMuPDF + pdfplumber + Camelot + EasyOCR/pytesseract",
+        "pages": [
+          6,
+          7
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "chunk_id": "c7",
+      "page_start": 8,
+      "page_end": 9,
+      "section_title": "–Trading(별도,연결)(조원)195.9 173.3 268.4 101.6 206.6 107.5 113.4 72.3 78.7 119.0 운용손익분배및배당금수익1Q24",
+      "chunk_type": "narrative",
+      "source_block_ids": [
+        "p8_b1",
+        "p8_b2",
+        "p9_b2"
+      ],
+      "text": "–Trading(별도,연결)(조원)195.9 173.3 268.4 101.6 206.6 107.5 113.4 72.3 78.7 119.0 운용손익분배및배당금수익1Q24\n\nTrading 운용손익3,257억원(QoQ+81%)기록\n운용손익2,066억원(QoQ+103%), 분배및배당금수익1,190억원(QoQ+51%)기록\n투자목적자산공정가치평가손익+900억원(흑자전환)8.4 7.3 7.1 6.6 6.8 3.4 3.2 3.5 3.7 3.3 15.9 16.7 17.8 17.8 19.6 6.8 7.8 7.9 7.5 7.7 발행어음대고객RP\n\nIB 수수료수익342억원(QoQ-21%) 기록\nIPO 주관총8건진행, LX판토스PE 지분매각에따른성공적Track Record 구축. 블랙스톤제이제이툴스인수금융등수행\n부동산PF, 기투자건에대한적극적관리수행과함께신규투자기회확보계획(이자손익내반영)IPO",
+      "linked_visual_summaries": [],
+      "provenance": {
+        "doc_title": "미래에셋증권 1분기 실적보고서",
+        "parser_used": "PyMuPDF + pdfplumber + Camelot + EasyOCR/pytesseract",
+        "pages": [
+          8,
+          9
+        ]
+      },
+      "warnings": [
+        "High numeric density data - highly tabular/dashboard-like"
+      ]
+    },
+    {
+      "chunk_id": "c8",
+      "page_start": 10,
+      "page_end": 10,
+      "section_title": "–해외법인(연결)(십억원)-0.2 29.3 27.8 46.3 86.4 8.3 22.5 23.0 9.0 33.2 인도/인도네시아/베트남/브라질/몽골미국/",
+      "chunk_type": "narrative",
+      "source_block_ids": [
+        "p10_b1",
+        "p10_b2"
+      ],
+      "text": "–해외법인(연결)(십억원)-0.2 29.3 27.8 46.3 86.4 8.3 22.5 23.0 9.0 33.2 인도/인도네시아/베트남/브라질/몽골미국/\n\n해외법인세전이익1,196억원(QoQ+116%) 달성\n해외법인연환산ROE(순익기준) 8.1% 기록\n선진지역(미국\n홍콩\n런던\n싱가포르)864억원으로해외법인수익비중72%, 이머징지역(인도\n인도네시아\n베트남\n브라질\n몽골)332억원기록해외법인성장전",
+      "linked_visual_summaries": [],
+      "provenance": {
+        "doc_title": "미래에셋증권 1분기 실적보고서",
+        "parser_used": "PyMuPDF + pdfplumber + Camelot + EasyOCR/pytesseract",
+        "pages": [
+          10
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "chunk_id": "c9",
+      "page_start": 11,
+      "page_end": 11,
+      "section_title": "2025년1분기실적보고서투자지표(%, 십억원)(%, 조원)(원)(원)5.9%6.5%7.8%7.9%8.5%ROE(누적연환산)11.1 11.4 11.3 12.1 12.2 지배주주자기자본54",
+      "chunk_type": "narrative",
+      "source_block_ids": [
+        "p11_b0",
+        "p11_b1",
+        "p11_b4"
+      ],
+      "text": "2025년1분기실적보고서투자지표(%, 십억원)(%, 조원)(원)(원)5.9%6.5%7.8%7.9%8.5%ROE(누적연환산)11.1 11.4 11.3 12.1 12.2 지배주주자기자본54\n\nROE(연결누적연환산): 누적연환산지배주주당기순이익/ 지배주주자기자본\n판매관리비율(별도) : 판매관리비/ 순영업수익\nBPS(연결) : 지배주주자기자본/ 분기말유통주식수(보통주+우선주)합\n\nEPS(연결) : 누적연환산지배주주당기순이익/ 가중평균유통주식수(보통주)합1Q242Q243Q244Q241Q251Q242Q243Q244Q241Q251Q242Q243Q244Q241",
+      "linked_visual_summaries": [],
+      "provenance": {
+        "doc_title": "미래에셋증권 1분기 실적보고서",
+        "parser_used": "PyMuPDF + pdfplumber + Camelot + EasyOCR/pytesseract",
+        "pages": [
+          11
+        ]
+      },
+      "warnings": [
+        "High numeric density data - highly tabular/dashboard-like"
+      ]
+    },
+    {
+      "chunk_id": "c10",
+      "page_start": 12,
+      "page_end": 12,
+      "section_title": "2025년1분기실적보고서Appendix3글로벌진출현황2주요계열사지배구조4주주환원현황",
+      "chunk_type": "narrative",
+      "source_block_ids": [
+        "p12_b0",
+        "p12_b4",
+        "p12_b5",
+        "p12_b6",
+        "p12_b9",
+        "p12_b8",
+        "p12_b11",
+        "p12_b14",
+        "p12_b13",
+        "p12_b16",
+        "p12_b15",
+        "p12_b17",
+        "p12_b18",
+        "p12_b20"
+      ],
+      "text": "2025년1분기실적보고서Appendix3글로벌진출현황2주요계열사지배구조4주주환원현황\n\n2025년 1분기 실적보고서\n\nAppendix\n\n회사 개요\n\n주요 계열사 지배구조\n\n2\n\n글로벌 진출 현황\n\n주주환원 현황\n\n4\n\nESG 주요 성과\n규제 비율\n\n5\n\n16\n\n6\n\n17",
+      "linked_visual_summaries": [],
+      "provenance": {
+        "doc_title": "미래에셋증권 1분기 실적보고서",
+        "parser_used": "PyMuPDF + pdfplumber + Camelot + EasyOCR/pytesseract",
+        "pages": [
+          12
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "chunk_id": "c11",
+      "page_start": 13,
+      "page_end": 13,
+      "section_title": "2025년1분기실적보고서회사개요발행주식총수721,892,158주보통주우선주2우선주570,316,408주14,07",
+      "chunk_type": "narrative",
+      "source_block_ids": [
+        "p13_b0"
+      ],
+      "text": "2025년1분기실적보고서회사개요발행주식총수721,892,158주보통주우선주2우선주570,316,408주14,07",
+      "linked_visual_summaries": [],
+      "provenance": {
+        "doc_title": "미래에셋증권 1분기 실적보고서",
+        "parser_used": "PyMuPDF + pdfplumber + Camelot + EasyOCR/pytesseract",
+        "pages": [
+          13
+        ]
+      },
+      "warnings": [
+        "High numeric density data - highly tabular/dashboard-like"
+      ]
+    },
+    {
+      "chunk_id": "c12",
+      "page_start": 14,
+      "page_end": 14,
+      "section_title": "2025년1분기실적보고서주요계열사지배구조| 기준일: 2025.3.31※ 지분율은우선주를제외한보통주총발행주식수기준",
+      "chunk_type": "narrative",
+      "source_block_ids": [
+        "p14_b0"
+      ],
+      "text": "2025년1분기실적보고서주요계열사지배구조| 기준일: 2025.3.31※ 지분율은우선주를제외한보통주총발행주식수기준",
+      "linked_visual_summaries": [
+        {
+          "id": "s_p14_b6",
+          "type": "image_like_summary",
+          "source_block_id": "p14_b6",
+          "bbox": [
+            465.36,
+            223.56,
+            558.12,
+            244.8
+          ],
+          "confidence": 1.0,
+          "text": "[IMAGE] 제목: 2025년1분기실적보고서주요계열사지배구조| 기준일: 2025.3.31※ 지분율은우선주를제외한보통주총발행주식수기준\n내부 텍스트: 미래에섯캐피달",
+          "meta": {
+            "source_type": "image",
+            "visual_subtype": "image",
+            "associated_title": "2025년1분기실적보고서주요계열사지배구조| 기준일: 2025.3.31※ 지분율은우선주를제외한보통주총발행주식수기준",
+            "used_context_blocks": false,
+            "summary_generation_method": "visual_ocr",
+            "visual_ocr_text": "미래에섯캐피달",
+            "legend_candidates": [
+              "미래에섯캐피달"
+            ],
+            "numeric_tokens": [],
+            "used_ocr": true,
+            "judgment_values": {
+              "ocr_text_length": 7,
+              "area_ratio": 1.0,
+              "meaningful_letters": 7,
+              "has_ass_title": true,
+              "has_context": false
+            }
+          }
+        },
+        {
+          "id": "s_p14_b9",
+          "type": "image_like_summary",
+          "source_block_id": "p14_b9",
+          "bbox": [
+            136.32,
+            224.16,
+            241.2,
+            245.64
+          ],
+          "confidence": 1.0,
+          "text": "[IMAGE] 제목: 2025년1분기실적보고서주요계열사지배구조| 기준일: 2025.3.31※ 지분율은우선주를제외한보통주총발행주식수기준\n내부 텍스트: 미래에셋자산운용",
+          "meta": {
+            "source_type": "image",
+            "visual_subtype": "image",
+            "associated_title": "2025년1분기실적보고서주요계열사지배구조| 기준일: 2025.3.31※ 지분율은우선주를제외한보통주총발행주식수기준",
+            "used_context_blocks": false,
+            "summary_generation_method": "visual_ocr",
+            "visual_ocr_text": "미래에셋자산운용",
+            "legend_candidates": [
+              "미래에셋자산운용"
+            ],
+            "numeric_tokens": [],
+            "used_ocr": true,
+            "judgment_values": {
+              "ocr_text_length": 8,
+              "area_ratio": 1.0,
+              "meaningful_letters": 8,
+              "has_ass_title": true,
+              "has_context": false
+            }
+          }
+        },
+        {
+          "id": "s_p14_b7",
+          "type": "image_like_summary",
+          "source_block_id": "p14_b7",
+          "bbox": [
+            442.2,
+            327.12,
+            580.32,
+            385.8
+          ],
+          "confidence": 1.0,
+          "text": "[IMAGE] 제목: 2025년1분기실적보고서주요계열사지배구조| 기준일: 2025.3.31※ 지분율은우선주를제외한보통주총발행주식수기준\n내부 텍스트: 미래에켓증권 (0O68OO)",
+          "meta": {
+            "source_type": "image",
+            "visual_subtype": "image",
+            "associated_title": "2025년1분기실적보고서주요계열사지배구조| 기준일: 2025.3.31※ 지분율은우선주를제외한보통주총발행주식수기준",
+            "used_context_blocks": false,
+            "summary_generation_method": "visual_ocr",
+            "visual_ocr_text": "미래에켓증권 (0O68OO)",
+            "legend_candidates": [
+              "미래에켓증권"
+            ],
+            "numeric_tokens": [
+              "(0O68OO)"
+            ],
+            "used_ocr": true,
+            "judgment_values": {
+              "ocr_text_length": 15,
+              "area_ratio": 1.0,
+              "meaningful_letters": 9,
+              "has_ass_title": true,
+              "has_context": false
+            }
+          }
+        },
+        {
+          "id": "s_p14_b8",
+          "type": "image_like_summary",
+          "source_block_id": "p14_b8",
+          "bbox": [
+            471.48,
+            336.24,
+            551.16,
+            377.52
+          ],
+          "confidence": 1.0,
+          "text": "[IMAGE] 제목: 2025년1분기실적보고서주요계열사지배구조| 기준일: 2025.3.31※ 지분율은우선주를제외한보통주총발행주식수기준\n내부 텍스트: 미래에켓증권 (0O6800)",
+          "meta": {
+            "source_type": "image",
+            "visual_subtype": "image",
+            "associated_title": "2025년1분기실적보고서주요계열사지배구조| 기준일: 2025.3.31※ 지분율은우선주를제외한보통주총발행주식수기준",
+            "used_context_blocks": false,
+            "summary_generation_method": "visual_ocr",
+            "visual_ocr_text": "미래에켓증권 (0O6800)",
+            "legend_candidates": [
+              "미래에켓증권"
+            ],
+            "numeric_tokens": [
+              "(0O6800)"
+            ],
+            "used_ocr": true,
+            "judgment_values": {
+              "ocr_text_length": 15,
+              "area_ratio": 1.0,
+              "meaningful_letters": 7,
+              "has_ass_title": true,
+              "has_context": false
+            }
+          }
+        },
+        {
+          "id": "s_p14_b5",
+          "type": "image_like_summary",
+          "source_block_id": "p14_b5",
+          "bbox": [
+            474.24,
+            430.2,
+            548.16,
+            470.28
+          ],
+          "confidence": 1.0,
+          "text": "[IMAGE] 제목: 2025년1분기실적보고서주요계열사지배구조| 기준일: 2025.3.31※ 지분율은우선주를제외한보통주총발행주식수기준\n내부 텍스트: 미래에섯생명 (085620)",
+          "meta": {
+            "source_type": "image",
+            "visual_subtype": "image",
+            "associated_title": "2025년1분기실적보고서주요계열사지배구조| 기준일: 2025.3.31※ 지분율은우선주를제외한보통주총발행주식수기준",
+            "used_context_blocks": false,
+            "summary_generation_method": "visual_ocr",
+            "visual_ocr_text": "미래에섯생명 (085620)",
+            "legend_candidates": [
+              "미래에섯생명"
+            ],
+            "numeric_tokens": [
+              "(085620)"
+            ],
+            "used_ocr": true,
+            "judgment_values": {
+              "ocr_text_length": 15,
+              "area_ratio": 1.0,
+              "meaningful_letters": 6,
+              "has_ass_title": true,
+              "has_context": false
+            }
+          }
+        },
+        {
+          "id": "s_p14_b12",
+          "type": "image_like_summary",
+          "source_block_id": "p14_b12",
+          "bbox": [
+            607.92,
+            430.44,
+            705.6,
+            470.64
+          ],
+          "confidence": 1.0,
+          "text": "[IMAGE] 제목: 2025년1분기실적보고서주요계열사지배구조| 기준일: 2025.3.31※ 지분율은우선주를제외한보통주총발행주식수기준\n내부 텍스트: 미래에젯벤처투자 (100790)",
+          "meta": {
+            "source_type": "image",
+            "visual_subtype": "image",
+            "associated_title": "2025년1분기실적보고서주요계열사지배구조| 기준일: 2025.3.31※ 지분율은우선주를제외한보통주총발행주식수기준",
+            "used_context_blocks": false,
+            "summary_generation_method": "visual_ocr",
+            "visual_ocr_text": "미래에젯벤처투자 (100790)",
+            "legend_candidates": [
+              "미래에젯벤처투자"
+            ],
+            "numeric_tokens": [
+              "(100790)"
+            ],
+            "used_ocr": true,
+            "judgment_values": {
+              "ocr_text_length": 17,
+              "area_ratio": 1.0,
+              "meaningful_letters": 8,
+              "has_ass_title": true,
+              "has_context": false
+            }
+          }
+        }
+      ],
+      "provenance": {
+        "doc_title": "미래에셋증권 1분기 실적보고서",
+        "parser_used": "PyMuPDF + pdfplumber + Camelot + EasyOCR/pytesseract",
+        "pages": [
+          14
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "chunk_id": "c13",
+      "page_start": 15,
+      "page_end": 15,
+      "section_title": "2025년1분기실적보고서해외진출현황| 기준일: 2025.3.3111글로벌지역20글로벌거점*(실제영업법인/사무소기준)5,262글로",
+      "chunk_type": "narrative",
+      "source_block_ids": [
+        "p15_b0"
+      ],
+      "text": "2025년1분기실적보고서해외진출현황| 기준일: 2025.3.3111글로벌지역20글로벌거점*(실제영업법인/사무소기준)5,262글로",
+      "linked_visual_summaries": [
+        {
+          "id": "s_p15_b5",
+          "type": "chart_like_summary",
+          "source_block_id": "p15_b5",
+          "bbox": [
+            99.0,
+            226.08,
+            657.72,
+            503.2
+          ],
+          "confidence": 1.0,
+          "text": "[CHART] 제목: 2025년1분기실적보고서해외진출현황| 기준일: 2025.3.3111글로벌지역20글로벌거점*(실제영업법인/사무소기준)5,262글로\n내부 텍스트: 유렵 (영국요그리스) Brokerage 및 SalesaTrading 비즈니 ETF 중심 Sales&Trading 비즈니스 TF 중심 Sales8Trading 비즈니스 한국 중국 중국 금움시장 동향 리서지 Sales&Trading 인도 Brokerage 중심 현지시장 공락 Brokerage 중심 싱가포르 Brokerage 중심 비즈니스 다각화 Brokerz ...",
+          "meta": {
+            "source_type": "chart",
+            "visual_subtype": "chart",
+            "associated_title": "2025년1분기실적보고서해외진출현황| 기준일: 2025.3.3111글로벌지역20글로벌거점*(실제영업법인/사무소기준)5,262글로",
+            "used_context_blocks": false,
+            "summary_generation_method": "visual_ocr",
+            "visual_ocr_text": "유렵 (영국요그리스) Brokerage 및 SalesaTrading 비즈니 ETF 중심 Sales&Trading 비즈니스 TF 중심 Sales8Trading 비즈니스 한국 중국 중국 금움시장 동향 리서지 Sales&Trading 인도 Brokerage 중심 현지시장 공락 Brokerage 중심 싱가포르 Brokerage 중심 비즈니스 다각화 Brokerz Brokerage, WM 비즈니스",
+            "legend_candidates": [
+              "유렵 (영국요그리스)",
+              "한국",
+              "중국",
+              "중국 금움시장 동향 리서지",
+              "Sales&Trading",
+              "인도",
+              "Brokerage 중심",
+              "싱가포르",
+              "Brokerz"
+            ],
+            "numeric_tokens": [
+              "TF 중심 Sales8Trading 비즈니스"
+            ],
+            "used_ocr": true,
+            "judgment_values": {
+              "ocr_text_length": 203,
+              "area_ratio": 1.0,
+              "meaningful_letters": 161,
+              "has_ass_title": true,
+              "has_context": false
+            }
+          }
+        }
+      ],
+      "provenance": {
+        "doc_title": "미래에셋증권 1분기 실적보고서",
+        "parser_used": "PyMuPDF + pdfplumber + Camelot + EasyOCR/pytesseract",
+        "pages": [
+          15
+        ]
+      },
+      "warnings": [
+        "High numeric density data - highly tabular/dashboard-like"
+      ]
+    },
+    {
+      "chunk_id": "c14",
+      "page_start": 16,
+      "page_end": 16,
+      "section_title": "2025년1분기실적보고서주주환원현황| 기준일: 2025.3.31(2024~2026년)중장기주주환원정책>    35%보통주소각2우선주소",
+      "chunk_type": "narrative",
+      "source_block_ids": [
+        "p16_b0",
+        "p16_b1"
+      ],
+      "text": "2025년1분기실적보고서주주환원현황| 기준일: 2025.3.31(2024~2026년)중장기주주환원정책>    35%보통주소각2우선주소\n\n–( 자기주식수+ 최대주주등특수관계인보유주식수)주주환원성향목표*주주환원성향= (배당금액+ 자기주식소각금액) / 조정당기순이익>   1억주발행주식소각(연간목표)발행",
+      "linked_visual_summaries": [],
+      "provenance": {
+        "doc_title": "미래에셋증권 1분기 실적보고서",
+        "parser_used": "PyMuPDF + pdfplumber + Camelot + EasyOCR/pytesseract",
+        "pages": [
+          16
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "chunk_id": "c15",
+      "page_start": 17,
+      "page_end": 18,
+      "section_title": "2025년1분기실적보고서ESG 주요성과| 기준일: 2025.3.31A년연속13ESG 등급ESG 이니셔티브글로벌국내A",
+      "chunk_type": "narrative",
+      "source_block_ids": [
+        "p17_b0",
+        "p18_b1"
+      ],
+      "text": "2025년1분기실적보고서ESG 주요성과| 기준일: 2025.3.31A년연속13ESG 등급ESG 이니셔티브글로벌국내A\n\n순자본비율(자기자본비율) : 필요유지자기자본*에대한순자본의비율을백분율(%)로표시한수치(= [영업용순자본\n–총위험액] / 법정자본금(약1,918억원) x 70%)\n레버리지비율: 자기자본에대한총자산의비율을백분율(%)로표시한수치(= 총자산/ 자기자본)\n1M 3M 유동성비율: 잔존만기1\n3개월이내부채대한잔존만기1\n3개월이내자산의비율(= 잔존만기1\n3개월이내자산/ 잔존만기1\n3개월이내부채)104 110 108 110 1",
+      "linked_visual_summaries": [
+        {
+          "id": "s_p17_b7",
+          "type": "image_like_summary",
+          "source_block_id": "p17_b7",
+          "bbox": [
+            224.16,
+            218.16,
+            343.08,
+            270.0
+          ],
+          "confidence": 1.0,
+          "text": "[IMAGE] 제목: 2025년1분기실적보고서ESG 주요성과| 기준일: 2025.3.31A년연속13ESG 등급ESG 이니셔티브글로벌국내A\n내부 텍스트: Hemberof DowJones Sustainability Indices Powered bythe SaPGlobalCSA",
+          "meta": {
+            "source_type": "image",
+            "visual_subtype": "image",
+            "associated_title": "2025년1분기실적보고서ESG 주요성과| 기준일: 2025.3.31A년연속13ESG 등급ESG 이니셔티브글로벌국내A",
+            "used_context_blocks": false,
+            "summary_generation_method": "visual_ocr",
+            "visual_ocr_text": "Hemberof DowJones Sustainability Indices Powered bythe SaPGlobalCSA",
+            "legend_candidates": [
+              "Hemberof",
+              "DowJones"
+            ],
+            "numeric_tokens": [],
+            "used_ocr": true,
+            "judgment_values": {
+              "ocr_text_length": 67,
+              "area_ratio": 1.0,
+              "meaningful_letters": 61,
+              "has_ass_title": true,
+              "has_context": false
+            }
+          }
+        },
+        {
+          "id": "s_p17_b12",
+          "type": "image_like_summary",
+          "source_block_id": "p17_b12",
+          "bbox": [
+            381.96,
+            223.8,
+            463.56,
+            258.72
+          ],
+          "confidence": 1.0,
+          "text": "[IMAGE] 제목: 2025년1분기실적보고서ESG 주요성과| 기준일: 2025.3.31A년연속13ESG 등급ESG 이니셔티브글로벌국내A\n내부 텍스트: DISCLOSURE INSIGHT ACTION",
+          "meta": {
+            "source_type": "image",
+            "visual_subtype": "image",
+            "associated_title": "2025년1분기실적보고서ESG 주요성과| 기준일: 2025.3.31A년연속13ESG 등급ESG 이니셔티브글로벌국내A",
+            "used_context_blocks": false,
+            "summary_generation_method": "visual_ocr",
+            "visual_ocr_text": "DISCLOSURE INSIGHT ACTION",
+            "legend_candidates": [],
+            "numeric_tokens": [],
+            "used_ocr": true,
+            "judgment_values": {
+              "ocr_text_length": 25,
+              "area_ratio": 1.0,
+              "meaningful_letters": 23,
+              "has_ass_title": true,
+              "has_context": false
+            }
+          }
+        },
+        {
+          "id": "s_p17_b6",
+          "type": "image_like_summary",
+          "source_block_id": "p17_b6",
+          "bbox": [
+            224.16,
+            324.72,
+            336.96,
+            357.48
+          ],
+          "confidence": 1.0,
+          "text": "[IMAGE] 제목: 2025년1분기실적보고서ESG 주요성과| 기준일: 2025.3.31A년연속13ESG 등급ESG 이니셔티브글로벌국내A\n내부 텍스트: 한국ESG기준원 Korea [nstttute ot Corporate Governance and Sustalnability",
+          "meta": {
+            "source_type": "image",
+            "visual_subtype": "image",
+            "associated_title": "2025년1분기실적보고서ESG 주요성과| 기준일: 2025.3.31A년연속13ESG 등급ESG 이니셔티브글로벌국내A",
+            "used_context_blocks": false,
+            "summary_generation_method": "visual_ocr",
+            "visual_ocr_text": "한국ESG기준원 Korea [nstttute ot Corporate Governance and Sustalnability",
+            "legend_candidates": [
+              "한국ESG기준원"
+            ],
+            "numeric_tokens": [],
+            "used_ocr": true,
+            "judgment_values": {
+              "ocr_text_length": 67,
+              "area_ratio": 1.0,
+              "meaningful_letters": 59,
+              "has_ass_title": true,
+              "has_context": false
+            }
+          }
+        },
+        {
+          "id": "s_p17_b14",
+          "type": "image_like_summary",
+          "source_block_id": "p17_b14",
+          "bbox": [
+            384.72,
+            327.48,
+            483.48,
+            350.88
+          ],
+          "confidence": 1.0,
+          "text": "[IMAGE] 제목: 2025년1분기실적보고서ESG 주요성과| 기준일: 2025.3.31A년연속13ESG 등급ESG 이니셔티브글로벌국내A\n내부 텍스트: EsG tnformation Analytics & Inyestment SUSTINVEST",
+          "meta": {
+            "source_type": "image",
+            "visual_subtype": "image",
+            "associated_title": "2025년1분기실적보고서ESG 주요성과| 기준일: 2025.3.31A년연속13ESG 등급ESG 이니셔티브글로벌국내A",
+            "used_context_blocks": false,
+            "summary_generation_method": "visual_ocr",
+            "visual_ocr_text": "EsG tnformation Analytics & Inyestment SUSTINVEST",
+            "legend_candidates": [
+              "SUSTINVEST"
+            ],
+            "numeric_tokens": [],
+            "used_ocr": true,
+            "judgment_values": {
+              "ocr_text_length": 49,
+              "area_ratio": 1.0,
+              "meaningful_letters": 43,
+              "has_ass_title": true,
+              "has_context": false
+            }
+          }
+        },
+        {
+          "id": "s_p17_b9",
+          "type": "image_like_summary",
+          "source_block_id": "p17_b9",
+          "bbox": [
+            563.88,
+            432.96,
+            645.24,
+            472.68
+          ],
+          "confidence": 1.0,
+          "text": "[IMAGE] 제목: 2025년1분기실적보고서ESG 주요성과| 기준일: 2025.3.31A년연속13ESG 등급ESG 이니셔티브글로벌국내A\n내부 텍스트: SCIENCE BASED TARGETS",
+          "meta": {
+            "source_type": "image",
+            "visual_subtype": "image",
+            "associated_title": "2025년1분기실적보고서ESG 주요성과| 기준일: 2025.3.31A년연속13ESG 등급ESG 이니셔티브글로벌국내A",
+            "used_context_blocks": false,
+            "summary_generation_method": "visual_ocr",
+            "visual_ocr_text": "SCIENCE BASED TARGETS",
+            "legend_candidates": [
+              "SCIENCE",
+              "BASED",
+              "TARGETS"
+            ],
+            "numeric_tokens": [],
+            "used_ocr": true,
+            "judgment_values": {
+              "ocr_text_length": 21,
+              "area_ratio": 1.0,
+              "meaningful_letters": 19,
+              "has_ass_title": true,
+              "has_context": false
+            }
+          }
+        },
+        {
+          "id": "s_p17_b11",
+          "type": "image_like_summary",
+          "source_block_id": "p17_b11",
+          "bbox": [
+            246.0,
+            434.16,
+            351.12,
+            471.0
+          ],
+          "confidence": 1.0,
+          "text": "[IMAGE] 제목: 2025년1분기실적보고서ESG 주요성과| 기준일: 2025.3.31A년연속13ESG 등급ESG 이니셔티브글로벌국내A\n내부 텍스트: United Nations Global Cornpact",
+          "meta": {
+            "source_type": "image",
+            "visual_subtype": "image",
+            "associated_title": "2025년1분기실적보고서ESG 주요성과| 기준일: 2025.3.31A년연속13ESG 등급ESG 이니셔티브글로벌국내A",
+            "used_context_blocks": false,
+            "summary_generation_method": "visual_ocr",
+            "visual_ocr_text": "United Nations Global Cornpact",
+            "legend_candidates": [
+              "United Nations",
+              "Global Cornpact"
+            ],
+            "numeric_tokens": [],
+            "used_ocr": true,
+            "judgment_values": {
+              "ocr_text_length": 30,
+              "area_ratio": 1.0,
+              "meaningful_letters": 27,
+              "has_ass_title": true,
+              "has_context": false
+            }
+          }
+        },
+        {
+          "id": "s_p17_b10",
+          "type": "image_like_summary",
+          "source_block_id": "p17_b10",
+          "bbox": [
+            393.84,
+            443.64,
+            521.16,
+            463.08
+          ],
+          "confidence": 1.0,
+          "text": "[IMAGE] 제목: 2025년1분기실적보고서ESG 주요성과| 기준일: 2025.3.31A년연속13ESG 등급ESG 이니셔티브글로벌국내A\n내부 텍스트: TASKFORCE m CLIIATE-RELATED TCIFD) BNESSAREs",
+          "meta": {
+            "source_type": "image",
+            "visual_subtype": "image",
+            "associated_title": "2025년1분기실적보고서ESG 주요성과| 기준일: 2025.3.31A년연속13ESG 등급ESG 이니셔티브글로벌국내A",
+            "used_context_blocks": false,
+            "summary_generation_method": "visual_ocr",
+            "visual_ocr_text": "TASKFORCE m CLIIATE-RELATED TCIFD) BNESSAREs",
+            "legend_candidates": [
+              "TASKFORCE m",
+              "CLIIATE-RELATED",
+              "TCIFD)",
+              "BNESSAREs"
+            ],
+            "numeric_tokens": [],
+            "used_ocr": true,
+            "judgment_values": {
+              "ocr_text_length": 44,
+              "area_ratio": 1.0,
+              "meaningful_letters": 38,
+              "has_ass_title": true,
+              "has_context": false
+            }
+          }
+        }
+      ],
+      "provenance": {
+        "doc_title": "미래에셋증권 1분기 실적보고서",
+        "parser_used": "PyMuPDF + pdfplumber + Camelot + EasyOCR/pytesseract",
+        "pages": [
+          17,
+          18
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "chunk_id": "c16",
+      "page_start": 19,
+      "page_end": 19,
+      "section_title": "감사합니다MiraeAsset Securities ESG&IR Team | ci.securities.miraeasset.com | irteam@miraeasset.com",
+      "chunk_type": "narrative",
+      "source_block_ids": [
+        "p19_b0"
+      ],
+      "text": "감사합니다MiraeAsset Securities ESG&IR Team | ci.securities.miraeasset.com | irteam@miraeasset.com",
+      "linked_visual_summaries": [
+        {
+          "id": "s_p19_b1",
+          "type": "image_like_summary",
+          "source_block_id": "p19_b1",
+          "bbox": [
+            330.72,
+            448.08,
+            465.36,
+            495.24
+          ],
+          "confidence": 1.0,
+          "text": "[IMAGE] 제목: 감사합니다MiraeAsset Securities ESG&IR Team | ci.securities.miraeasset.com | irteam@miraeasset.com\n내부 텍스트: MIRAE EG움문f 미래에셋증권",
+          "meta": {
+            "source_type": "image",
+            "visual_subtype": "image",
+            "associated_title": "감사합니다MiraeAsset Securities ESG&IR Team | ci.securities.miraeasset.com | irteam@miraeasset.com",
+            "used_context_blocks": false,
+            "summary_generation_method": "visual_ocr",
+            "visual_ocr_text": "MIRAE EG움문f 미래에셋증권",
+            "legend_candidates": [
+              "MIRAE EG움문f",
+              "미래에셋증권"
+            ],
+            "numeric_tokens": [],
+            "used_ocr": true,
+            "judgment_values": {
+              "ocr_text_length": 18,
+              "area_ratio": 1.0,
+              "meaningful_letters": 16,
+              "has_ass_title": true,
+              "has_context": false
+            }
+          }
+        }
+      ],
+      "provenance": {
+        "doc_title": "미래에셋증권 1분기 실적보고서",
+        "parser_used": "PyMuPDF + pdfplumber + Camelot + EasyOCR/pytesseract",
+        "pages": [
+          19
+        ]
+      },
+      "warnings": []
+    }
+  ]
+}
